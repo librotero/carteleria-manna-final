@@ -9,7 +9,7 @@ interface Headers {
 }
 //const url: any = "http://localhost:5000"
 
-const url: any = "https://smiling-relation-production.up.railway.app"
+const url: any = "https://young-knife-production.up.railway.app"
 interface Cartel {
     descripcion: string,
     costo1faz: number,

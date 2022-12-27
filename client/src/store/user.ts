@@ -12,7 +12,7 @@ interface User {
 	dni: Number;
 	fechaNacimiento: Date;
 }
-const url: any = "https://smiling-relation-production.up.railway.app"
+const url: any = "https://young-knife-production.up.railway.app"
 
 interface UserLogin {
 	email: string;

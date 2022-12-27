@@ -58,11 +58,11 @@ import DeleteClientes from './clientes/deleteClientes'
 import GetClientesAll from './clientes/getClientesAllPages'
 
 
-router.use('/clients',PostClientes)
-router.use('/clients',  GetClientes)
-router.use('/clients', PutClientes)
-router.use('/clients',  DeleteClientes)
-router.use('/clients', GetClientesAll)
+router.use('/clientes',PostClientes)
+router.use('/clientes',  GetClientes)
+router.use('/clientes', PutClientes)
+router.use('/clientes',  DeleteClientes)
+router.use('/clientes', GetClientesAll)
 
 
 //proveedores
