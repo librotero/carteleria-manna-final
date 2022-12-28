@@ -166,7 +166,7 @@ console.log("hola soy un array", values)
    
   
 
-   if(values.descripcion
+   if(values.descripcion && values.costo1faz || values.costo2faz && values.category
     ){
       addCartel(values);
       carteles.push(values)

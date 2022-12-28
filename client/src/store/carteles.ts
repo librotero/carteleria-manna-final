@@ -7,9 +7,9 @@ import { devtools } from 'zustand/middleware';
 interface Headers {
 	"x-access-token": { token: string };
 }
-//const url: any = "http://localhost:5000"
+const url: any = "http://localhost:5000"
 
-const url: any = "https://young-knife-production.up.railway.app"
+//const url: any = "https://young-knife-production.up.railway.app"
 interface Cartel {
     descripcion: string,
     costo1faz: number,
@@ -57,7 +57,7 @@ const useCartel = create<CartelStore>()(
       //actions
       addCartel: async (body) => {
         try {
-          const { data } = await axios.post(`${url}/api/carteles/create`, body );
+          const { data } = await axios.post(`${url}/api/cartel/create`, body );
         set({ success: true, error: false });
         } catch (error) {
           set({ error: true, success: false });
@@ -71,7 +71,7 @@ const useCartel = create<CartelStore>()(
         };
         set({ success: true})
         set({ loading: true}) 
-        const { data } = await axios.put(`${url}/api/carteles`, body, { headers: { "x-access-token": token} });
+        const { data } = await axios.put(`${url}/api/cartel`, body, { headers: { "x-access-token": token} });
         set({ success: false})
         
         set({ loading: false}) 
@@ -81,7 +81,7 @@ const useCartel = create<CartelStore>()(
       getCarteles: async (token) => {
         try{
           set({ loading: true}) 
-          const { data } = await axios.get(`${url}/api/carteles`,
+          const { data } = await axios.get(`${url}/api/cartel`,
           { headers: { "x-access-token": token } })
           set((state) => ({ carteles2: (state.carteles2 = data) }));
         } catch(error){
@@ -104,7 +104,7 @@ const useCartel = create<CartelStore>()(
       },
       deleteCartel: async (params, headers)=>{
         set({ loading: true });
-        const { data } = await axios.delete(`${url}/api/carteles/${params}`,  headers);
+        const { data } = await axios.delete(`${url}/api/cartel/${params}`,  headers);
         set({ loading: false });
 
       },

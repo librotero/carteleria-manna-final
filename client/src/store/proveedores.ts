@@ -5,8 +5,8 @@ import { devtools } from "zustand/middleware";
 interface Headers {
 	"x-access-token": { token: string };
 }
-//const url: any = "http://localhost:5000"
-const url: any = "https://smiling-relation-production.up.railway.app"
+const url: any = "http://localhost:5000"
+//const url: any = "https://smiling-relation-production.up.railway.app"
 
 type ProveedoresStore = {
 	proveedores: [];

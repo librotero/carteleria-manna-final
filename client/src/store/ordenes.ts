@@ -7,8 +7,8 @@ interface Headers {
 	"x-access-token": { token: string };
 }
 
-//const url: any = "http://localhost:5000"
-const url: any = "https://young-knife-production.up.railway.app"
+const url: any = "http://localhost:5000"
+//const url: any = "https://young-knife-production.up.railway.app"
 
 interface Orden {
   fecha: string,
@@ -88,7 +88,7 @@ const useOrdenes = create<UserStore>()(
         };
         try{
           set({ loading: true}) 
-          const { data } = await axios.get(`${url}/api/ordenes/ordenesbydate?date1=${date1}&date2=${date2}`,{ headers: { "x-access-token": token} }
+          const { data } = await axios.get(`${url}/api/orden/ordenesbydate?date1=${date1}&date2=${date2}`,{ headers: { "x-access-token": token} }
           )
           set((state) => ({ ordenes2: (state.ordenes2 = data) }));
         }catch(error){
@@ -103,7 +103,7 @@ const useOrdenes = create<UserStore>()(
       };
       set({ success: true, error: false });
        try{ 
-        const { data } = await axios.post(`${url}/api/ordenes/create`, body, { headers: { "x-access-token": token} });
+        const { data } = await axios.post(`${url}/api/orden/create`, body, { headers: { "x-access-token": token} });
       }catch (error) {
         set({ error: true, success: false });
        }
@@ -112,7 +112,7 @@ const useOrdenes = create<UserStore>()(
       getOrdenes: async (headers) => {
         try{
           set({ loading: true}) 
-          const { data } = await axios.get(`${url}/api/ordeness`, headers )
+          const { data } = await axios.get(`${url}/api/orden`, headers )
           set((state) => ({ ordenes2: (state.ordenes2 = data) }));
         }catch(error){
           console.log(error)
@@ -122,7 +122,7 @@ const useOrdenes = create<UserStore>()(
       getOrdenesAll: async (token, page, limit, name) => {
         try{
           set({ loading: true}) 
-          const { data } = await axios.get(`${url}/api/ordeness/all?page=${page}&limit=${limit}&name=${name}`,
+          const { data } = await axios.get(`${url}/api/orden/all?page=${page}&limit=${limit}&name=${name}`,
           { headers: { "x-access-token": token } })
           set((state) => ({ ordenes: (state.ordenes = data) }));
         } catch(error){
@@ -134,7 +134,7 @@ const useOrdenes = create<UserStore>()(
         getOrdenesAllByName: async (token, page, limit, name) => {
           try{
             set({ loading: true}) 
-            const { data } = await axios.get(`${url}/api/ordeness/byname?page=${page}&limit=${limit}&name=${name}`,
+            const { data } = await axios.get(`${url}/api/orden/byname?page=${page}&limit=${limit}&name=${name}`,
             { headers: { "x-access-token": token } })
             set((state) => ({ ordenes: (state.ordenes = data) }));
           } catch(error){
@@ -145,7 +145,7 @@ const useOrdenes = create<UserStore>()(
           },
       deleteOrdenes: async (params, headers, idUser)=>{
         set({ success: true, error: false });
-        const { data } = await axios.delete(`${url}/api/ordene/${params}?idUser=${idUser}`,   headers);
+        const { data } = await axios.delete(`${url}/api/orden/${params}?idUser=${idUser}`,   headers);
         set({ success: true, error: false });  
       },
       closeModal: () => {
