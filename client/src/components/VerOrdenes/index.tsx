@@ -26,7 +26,7 @@ const VerOrdenes =({setShowModal4, orden}:Props)=>{
         closeModal();
       };
     return(
-        <div className="">
+        <div className="m-5">
         <div className="">
         <div className="relative flex justify-end mb-10 p-5 flex text-end p-10 ">
               <button

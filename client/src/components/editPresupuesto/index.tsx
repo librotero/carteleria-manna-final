@@ -169,38 +169,48 @@ const handleSelectPorcentaje= (e: React.ChangeEvent<HTMLSelectElement>)=>{
   }
 const changeOrden=()=>{
 
-console.log("hola", values)
-Swal.fire({
-  title: '¿Desea convertir en orden?',
-  showDenyButton: true,
-  showCancelButton: true,
-  confirmButtonColor: '#77B327',
-  confirmButtonText: 'Guardar',
-  denyButtonText: `No guardar`,
-}).then((result) => {
-  if (result.isConfirmed) {
-    postOrden(values, headers)
-putPresupuesto(ordenchange, headers)
-handleCloseModal()
-    Swal.fire('¡Cambios guardados exitosamente!', '', 'success')
-  } else if (result.isDenied) {
-    Swal.fire('Los cambios no han sido guardados', '', 'info')
+if(values.fechaentrega && values.facturanum && values.seña){
+  console.log("hola", values)
+  Swal.fire({
+    title: '¿Desea convertir en orden?',
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonColor: '#77B327',
+    confirmButtonText: 'Guardar',
+    denyButtonText: `No guardar`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      postOrden(values, headers)
+  putPresupuesto(ordenchange, headers)
+  handleCloseModal()
+      Swal.fire('¡Cambios guardados exitosamente!', '', 'success')
+    } else if (result.isDenied) {
+      Swal.fire('Los cambios no han sido guardados', '', 'info')
+    }
+  })
+  }else{
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Cambios guardados exitosamente',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
-})
+ 
+
 }
 const deleteCarteles =(e:any)=>{
- var  array: any = values.carteles.filter((item:any)=>e.name!==item.name)
- var nuevo1: any = array.map((e:any)=>e.total)
-var total: any =  nuevo1.reduce((a: any, b: any) => a + b, 0)
-console.log("hey hey hye ai you gatrit", array, total)
-  setValues({
-    ...values,
-    carteles: array,
-    montototal: total
-  })
-
+  var  array: any = values.carteles.filter((item:any)=>e.name!==item.name)
+  var nuevo1: any = array.map((e:any)=>e.total)
+ var total: any =  nuevo1.reduce((a: any, b: any) => a + b, 0)
+ console.log("hey hey hye ai you gatrit", array, total)
+   setValues({
+     ...values,
+     carteles: array,
+     montototal: total
+   })
 }
-
   return (
     <div className="flex flex-wrap m-5">
          
@@ -267,9 +277,11 @@ console.log("hey hey hye ai you gatrit", array, total)
       </button>
      
     </div>
+<div className="p-4">
    {/**form cartel */}
    <AddCartel values ={values} setValues={setValues} montoModificado={montoModificado} setMontoModificado={setMontoModificado}/>
       {/**form cartel */}
+</div>
     <hr />
     <div className="flex  mb-1 grid sm:gap-1  sm:grid-cols-1 md:gap-3 md:grid-cols-3">
         {values.carteles.map((e: any, index: any) => (
@@ -569,6 +581,40 @@ onChange={handleChange}
       </button>
      
     </div>
+    <div className="flex border-b-4 pb-4  mb-1 grid sm:gap-1  sm:grid-cols-1 md:gap-3 md:grid-cols-3">
+        {values.carteles.map((e: any, index: any) => (
+          
+            <div 
+            className="block w-full text-gray-600 border-blue-600 border-2 text-lg uppercase bg-white p-3 rounded-lg" style={{"cursor":"pointer"}}>
+            <p className="text-start">
+                                <b>Nombre: </b>
+                                {e.name}{" "}
+                              </p>
+                              <p className="text-start">
+                                <b>base x altura : </b>
+                                {e.base} x {e.altura}{" "}
+                              </p>
+                              <b>categoría</b>
+                              {e.category.map((item: any) => (
+                                <div>{item}</div>
+                              ))}
+                              <p className="text-start">
+                                <b>estructura: </b>
+                                {e.estructura}{" "}
+                              </p>
+                              <p className="text-start">
+                                <b>otros: </b>
+                                {e.otros}{" "}
+                              </p>
+                              <p className="text-start">
+                                <b>faz: </b>
+                                {e.faz}{" "}
+                              </p>
+          </div>
+          
+        ))}
+        </div>
+    
       <form onSubmit={handleSubmit} className='flex flex-col mt-4'>
   {/**primera columna  */}
 

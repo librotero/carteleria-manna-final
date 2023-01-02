@@ -174,7 +174,7 @@ const InsumoEdit = ({ setShowModal3, orden }: Props) => {
     }
   }, []);
   return (
-    <div className="">
+    <div className="m-5">
         <div className="relative flex justify-end mb-10 p-5 flex text-end ">
               <button
                 className="absolute top-1/3 left-5 text-xl w-10 h-10 rounded-full flex justify-center "
@@ -340,39 +340,70 @@ const InsumoEdit = ({ setShowModal3, orden }: Props) => {
           ""
         )}
         {values.restaHistory.length > 0 ? (
-          <div>
+          <div className="border mt-5">
             <hr />
-            <h1 className="text-bold mt-5">Metodos de Pago</h1>
-            <div className="flex pl-2 ">
+            <h1 className="text-bold text-center m-5">Metodos de Pago</h1>
+           
             
-            <p className="text-lg pt-2">
-              <b>Seña: </b>
-              {orden.formadepago}
-            </p>
-            <p className="text-lg pt-2 pl-2">
-              <b>seña: </b>
-              {orden.seña}
-            </p>
-            </div>
-            {values.restaHistory.map((e: any) => (
-              <div className="rounded ">
-                <div className="flex pl-2 ">
-                  <div className="w-full flex ">
-                  <b className="text-lg">método: </b>
-                    <p className="text-lg">
-                    {e.metodo}
-                    </p>
-                  </div>
-                  <div className="w-full">
-                    <p className="text-lg">
-                      <b>monto: {e.monto}</b>
-                      
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
             <hr />
+            
+<div className="overflow-x-auto relative">
+<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-green-200 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" className="py-3 px-6">
+                    Método
+                </th>
+                <th scope="col" className="py-3 px-6">
+                   seña
+                </th>
+               
+            </tr>
+        </thead>
+        <tbody>
+              <tr className="bg-green-50 border-b-2 border-green-800">
+              <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              {orden.formadepago}
+              </th>
+              <td className="py-4 px-6">
+              {orden.seña}
+              </td>
+            
+          </tr>
+           
+           
+        </tbody>
+    </table>
+    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" className="py-3 px-6">
+                    Metodo
+                </th>
+                <th scope="col" className="py-3 px-6">
+                   Monto
+                </th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            {values.restaHistory.map((e: any) => (
+              <tr className="bg-white dark:bg-gray-800">
+              <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              {e.metodo}
+              </th>
+              <td className="py-4 px-6">
+              {e.monto}
+              </td>
+            
+          </tr>
+            ))}
+           
+           
+        </tbody>
+    </table>
+</div>
+
           </div>
         ) : (
           ""

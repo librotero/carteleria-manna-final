@@ -411,10 +411,12 @@ console.log("hola estos", newArray, values)
                 <option value="" defaultValue={""} disabled>
                   seleccione método de pago
                 </option>
-                <option value="master">master</option>
-                <option value="visa">visa</option>
-                <option value="maestro">visa</option>
-                <option value="efectivo">efectivo</option>
+                <option value="efectivo">Efectivo</option>
+                <option value="transferencia">Transferencia</option>
+                <option value="cheque">Cheque</option>
+                <option value="tarjeta">Tarjeta de débito</option>
+                <option value="tarjeta">Tarjeta de credito</option>
+
               </select>
             </div>
 

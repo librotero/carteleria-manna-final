@@ -11,6 +11,7 @@ import moment from 'moment'
 const [accessToken] = useLocalStorage();
 const headers = useHeaders(accessToken);
 import useUser from "../../store/user";
+import Swal from 'sweetalert2'
 
 type Props = {
   setShowModal: any;
@@ -101,12 +102,28 @@ console.log("holaaaaaaaaaaaaa", values)
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
+   if(values.clientes &&  values.montototal ){
     addPresupuesto(values);
-	console.log("hola soy un valie", values)
-  
-    setTimeout(() => {
-      handleCloseModal()
-    }, 2000);
+    console.log("hola soy un valie", values)
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'presupuesto creado exitosamente',
+      showConfirmButton: false,
+      timer: 1500
+    })
+      setTimeout(() => {
+        handleCloseModal()
+      }, 2000);
+   }else{
+    Swal.fire({
+      position: 'center',
+      icon: 'error',
+      title: 'Hay campos sin completar',
+      showConfirmButton: false,
+      timer: 1500
+    })
+   }
   };
 
   const handleCloseModal = () => {
@@ -193,7 +210,7 @@ console.log("holaaaaaaaaaaaaa", values)
 <AddCartel values ={values} setValues={setValues} montoModificado={montoModificado} setMontoModificado={setMontoModificado}/>
       {/**form cartel */}
 <hr/>
-<div className="flex  mb-1 grid sm:gap-1  sm:grid-cols-1 md:gap-3 md:grid-cols-3">
+<div className="flex p-5 mb-1 grid sm:gap-1  sm:grid-cols-1 md:gap-3 md:grid-cols-3">
         {values.carteles.map((e: any) => (
           
             <div className="block w-full text-gray-600 border-blue-600 border-2 text-lg uppercase bg-white p-3 rounded-lg" style={{"cursor":"pointer"}}>

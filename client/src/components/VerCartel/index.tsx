@@ -112,10 +112,7 @@ const [category, setCartegory]=useState(["IMPRESIONES", "CARTELERIA"])
 }
 </div>
 </div>
-<div className="text-end">
-  <p>Proveedor</p>
-  <h1 className="text-2xl">(proveedor)</h1>
-</div>
+
     </div>
   </div>
   )
