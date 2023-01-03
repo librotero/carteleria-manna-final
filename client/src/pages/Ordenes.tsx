@@ -27,7 +27,8 @@ import {
   MdExpandLess,
   MdExpandMore,
   MdDisabledByDefault,
-  MdAttachMoney
+  MdAttachMoney,
+  MdPrint
 } from "react-icons/md";
 
 import { BsSearch } from "react-icons/bs";
@@ -88,7 +89,7 @@ const Proveedores = () => {
   const [sortLastName, setSortLastName] = useState<null | boolean>(null);
 
   useEffect(() => {
-    getOrdenesAll(accessToken, page ,limit, name)
+    getOrdenesAllByName(accessToken, page ,limit, name)
 
     console.log("holaaaaaa", name);
     getClients(headers);
@@ -457,6 +458,9 @@ vendedor: orden.vendedor
                       <th className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
                         ELIMINAR
                       </th>
+                      <th className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
+                        Imprimir 
+                      </th>
                       
                       <th className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
                         ESTADO
@@ -621,13 +625,21 @@ vendedor: orden.vendedor
                               {<MdDelete />}
                             </p>
                           </td>
+                          <td className="px-3 py-2 ">
+                            <p
+                              className="text-gray-900 whitespace-no-wrap capitalize justify-center flex text-xl cursor-pointer"
+                           
+                            >
+                              {<MdPrint />}
+                            </p>
+                          </td>
                           
                           <td className="px-3 py-2">
                             <p className="text-gray-900 whitespace-no-wrap">
                               {
                                 orden.montototal===orden.seña+orden.resta
-                                ?<h1 className="text-white w-20 bg-violet-600 rounded p-1 text-center">Pagada</h1>
-                                :<h1 className="text-white w-20 bg-yellow-600 rounded p-1 text-center">Sin Pagar</h1>
+                                ?<h1 className="text-white w-20 bg-green-600 rounded p-1 text-center">Pagada</h1>
+                                :<h1 className="text-white w-20 bg-red-600 rounded p-1 text-center">Sin Pagar</h1>
                               }
                             </p>
                           </td>

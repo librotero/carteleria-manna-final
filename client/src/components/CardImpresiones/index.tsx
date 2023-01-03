@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {PureComponent} from 'react'
+import jsPDF from 'jspdf'
+
 import moment from "moment";
 import { BsSearch, BsPrinter } from "react-icons/bs";
 import useOrdenes from "../../store/ordenes";
@@ -12,7 +14,7 @@ type Props = {
     e: any;
     ordenes:any
   };
-
+ 
 var num: any =0
 function Card({ e , ordenes}: Props) {
 
@@ -57,7 +59,18 @@ function Card({ e , ordenes}: Props) {
           putOrden(values, headers);
         }
       };
-
+      const jsPDFGenerator = () => {
+        var doc = new jsPDF('p', 'pt', 'a1',);
+    
+      doc.html(document.querySelector("#content"), {
+        callback: function(pdf){
+    
+          doc.save(`orden.pdf`)
+    
+        }
+      })
+    
+      }
       const entregado = () => {
         e.stateImpresiones = "entregada";
         console.log("holaaaaaaaaaaaaa soy un camboio aaa", e._id);
@@ -72,9 +85,9 @@ function Card({ e , ordenes}: Props) {
 
 
   return (
-    <div className="mb-2 rounded-lg  border-2 border-gray-200 border-b-gray-500">
-                          <div className="block  mr-5 mt-5 ml-5 mb-1 p-1 rounded ">
-                            <div className="flex w-full border-b-2">
+    <div className="mb-2 rounded-lg  border-2 border-gray-200 border-b-gray-500" >
+                          <div className="block  mr-5 mt-5 ml-5 mb-1 p-1 rounded " >
+                            <div className="flex w-full border-b-2" id="content">
                               <div className=" flex w-5/6  mt-2 mb-2">
                                 <h1 className="m-4">
                                   <b>Orden N° </b>
@@ -120,7 +133,7 @@ function Card({ e , ordenes}: Props) {
                                   <h1 className="align-center mr-2" style={{ cursor: "pointer" }}>
                                     <BsSearch />
                                   </h1>
-                                  <h1 className="align-center mr-2" style={{ cursor: "pointer" }}>
+                                  <h1 className="align-center mr-2" style={{ cursor: "pointer" }} onClick={jsPDFGenerator}>
                                     <BsPrinter />
                                   </h1>
                                 </div>

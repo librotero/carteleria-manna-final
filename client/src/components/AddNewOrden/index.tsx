@@ -236,6 +236,18 @@ console.log("hola estos", newArray, values)
       operacion: value,
     });
   }
+  const deleteCarteles =(e:any)=>{
+    var  array: any = values.carteles.filter((item:any)=>e.name!==item.name)
+    var nuevo1: any = array.map((e:any)=>e.total)
+   var total: any =  nuevo1.reduce((a: any, b: any) => a + b, 0)
+   console.log("hey hey hye ai you gatrit", array, total)
+     setValues({
+       ...values,
+       carteles: array,
+       montototal: total
+     })
+   
+   };
 
   const handleSelectPorcentaje= (e: React.ChangeEvent<HTMLSelectElement>)=>{
     let {value}= e.currentTarget;
@@ -304,12 +316,45 @@ console.log("hola estos", newArray, values)
       </button>
       </div>
     <div className=" ">
-      
+    
         <div className=" m-10">
         <AddCartel values={values} setValues={setValues} montoModificado={montoModificado} setMontoModificado={setMontoModificado}/>
 
         </div>
-     
+        <div className="flex m-5 grid sm:gap-2  sm:grid-cols-2 md:gap-3 md:grid-cols-3">
+        {values.carteles.map((e: any) => (
+          
+            <div 
+            onClick={()=>deleteCarteles(e)}
+            className="block w-full text-gray-600 border-blue-600 border-2 text-lg uppercase bg-white p-3 rounded-lg" style={{"cursor":"pointer"}}>
+            <p className="text-start">
+                                <b>Nombre: </b>
+                                {e.name}{" "}
+                              </p>
+                              <p className="text-start">
+                                <b>base x altura : </b>
+                                {e.base} x {e.altura}{" "}
+                              </p>
+                              <b>categoría</b>
+                              {e.category.map((item: any) => (
+                                <div>{item}</div>
+                              ))}
+                              <p className="text-start">
+                                <b>estructura: </b>
+                                {e.estructura}{" "}
+                              </p>
+                              <p className="text-start">
+                                <b>otros: </b>
+                                {e.otros}{" "}
+                              </p>
+                              <p className="text-start">
+                                <b>faz: </b>
+                                {e.faz}{" "}
+                              </p>
+          </div>
+          
+        ))}
+        </div>
               <form onSubmit={handleSubmit} className="flex flex-col mt-4 p-10">
       
           {/**primera columna  */}
@@ -320,7 +365,7 @@ console.log("hola estos", newArray, values)
             Fecha
           </label>
           <input
-            className="appearance-none block w-20 bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
             id="grid-first-name"
             type="string"
             placeholder="hola"

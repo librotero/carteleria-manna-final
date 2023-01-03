@@ -134,7 +134,7 @@ const useOrdenes = create<UserStore>()(
         getOrdenesAllByName: async (token, page, limit, name) => {
           try{
             set({ loading: true}) 
-            const { data } = await axios.get(`${url}/api/orden/byname?page=${page}&limit=${limit}&name=${name}`,
+            const { data } = await axios.get(`${url}/api/orden/allbyname?page=${page}&limit=${limit}&name=${name}`,
             { headers: { "x-access-token": token } })
             set((state) => ({ ordenes: (state.ordenes = data) }));
           } catch(error){

@@ -1,4 +1,5 @@
-import { MdError, MdDone, MdArrowBack, MdEmail } from "react-icons/md";
+import React, {PureComponent} from 'react'
+import { MdError, MdDone, MdArrowBack, MdEmail, MdPrint } from "react-icons/md";
 import Swal from "sweetalert2";
 import moment from "moment";
 import useClients from "../../store/clientes";
@@ -6,6 +7,7 @@ import useHeaders from "../../hooks/useHeaders";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import useUser from "../../store/user";
 import { BsFillCheckCircleFill, BsWhatsapp } from "react-icons/bs";
+import jsPDF from 'jspdf'
 
 type Props = {
     setShowModal4: any;
@@ -25,8 +27,25 @@ const VerOrdenes =({setShowModal4, orden}:Props)=>{
         setShowModal4(false);
         closeModal();
       };
+
+      const jsPDFGenerator = () => {
+        var doc = new jsPDF('p', 'pt', 'a3',);
+    
+        doc.html(document.querySelector("#content"), {
+          callback: function(pdf){
+      
+            doc.save(`orden.pdf`)
+      
+          }
+        })
+      
+
+      }
+      const hastacuanto =()=>{
+
+      }
     return(
-        <div className="m-5">
+        <div className="m-5" >
         <div className="">
         <div className="relative flex justify-end mb-10 p-5 flex text-end p-10 ">
               <button
@@ -35,7 +54,7 @@ const VerOrdenes =({setShowModal4, orden}:Props)=>{
               >
                 <MdArrowBack />
               </button>
-              <div className="block">
+              <div className="block" >
               <div className="flex text-end border-b-4 ">
                 <b className="flex text-end">Orden:</b>
                 {orden.facturanum} 
@@ -46,15 +65,18 @@ const VerOrdenes =({setShowModal4, orden}:Props)=>{
                 ?user.name
                 :"no tiene un vendedor asignado"
               }
+              <button className="pointer" onClick={jsPDFGenerator}>
+              <MdPrint/>
+              </button>
               </div>
               </div>
             </div>
-          <div className="bg-white pl-10 pr-10 text-start text-2xl rounded">
+          <div className="bg-white pl-10 pr-10 text-start text-2xl rounded" id="content">
             
 
             <div className=" flex w-full  text-lg">
               <div className="w-1/3">
-                <b className="text-gray-600">Cliente: </b>
+                <b className="">Cliente: </b>
                 <h1>{orden.cliente}</h1>
               </div>
               <div className=" w-1/3 ">

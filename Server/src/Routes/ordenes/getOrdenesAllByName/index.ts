@@ -5,7 +5,7 @@ import Ordenes from '../../../Models/ordenes'
 
 const router = Router();
 
-router.get('/byname', async(req: any, res: any, next)=>{
+router.get('/allbyname', async(req: any, res: any, next)=>{
     
     try{
         const page : number = parseInt(req.query.page) - 1 || 0;
