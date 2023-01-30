@@ -64,6 +64,9 @@ const VerOrdenes = ({ setShowModal4, orden }: Props) => {
     doc.text(410, 230, `OTROS`);
     doc.text(500, 230, `COSTO`);
 
+    doc.text(35, 235, `__________________________________________________________________________________________`);
+ 
+
     for (let i = 0; i < orden.carteles.length; i++) {
       item = item + 20;
 
@@ -77,25 +80,34 @@ const VerOrdenes = ({ setShowModal4, orden }: Props) => {
       doc.text(410, item, `${orden.carteles[i].otros}`);
       doc.text(510, item, `$${orden.carteles[i].total}`);
       totalcosto = totalcosto + orden.carteles[i].total;
+      doc.setTextColor(220,220,220);
+
+      doc.text(35, item + 5, `__________________________________________________________________________________________`);
+      doc.setTextColor(0,0,0);
     }
-    doc.text(450, item + 20, `total costo:`);
-    doc.text(510, item + 20, `$${totalcosto}`);
-    doc.text(450, item + 40, `%:`);
-    doc.text(510, item + 40, `$${orden.montototal - totalcosto}`);
-    doc.text(450, item + 60, `seña:`);
-    doc.text(510, item + 60, `$${orden.seña}`);
-    doc.text(440, item + 70, `___________________`);
-    doc.text(450, item + 90, `total:`);
-    doc.text(510, item + 90, `$${orden.montototal - orden.seña}`);
+ 
+   
+
+
+    doc.text(450, item + 30, `total costo:`);
+    doc.text(510, item + 30, `$${totalcosto}`);
+    doc.text(475, item + 50, `total:`);
+    doc.text(510, item + 50, `$${orden.montototal}`);
+    doc.text(475, item + 70, `seña:`);
+    doc.text(510, item + 70, `$${orden.seña}`);
+    doc.text(440, item + 80, `___________________`);
+    doc.text(440, item + 95, `total restante:`);
+    doc.text(510, item + 95, `$${orden.montototal - orden.seña}`);
 
     doc.setFontSize(20);
 
-    doc.text(200, item + 120, `OBSERVACIONES`);
+    doc.text(200, item + 150, `OBSERVACIONES`);
     doc.setFontSize(10);
 
-    doc.text(35, item + 140, `${orden.observaciones}`);
+    doc.text(35, item + 180, `${orden.observaciones}`, {align: 'justify',lineHeightFactor: 1.5,maxWidth:500});
 
-    doc.save("a4.pdf");
+
+    doc.save(`orden${orden.facturanum}.pdf`);
   };
   const hastacuanto = () => {};
   return (
@@ -109,20 +121,24 @@ const VerOrdenes = ({ setShowModal4, orden }: Props) => {
             <MdArrowBack />
           </button>
           <div className="block">
-            <div className="flex text-end border-b-4 ">
+            <div className="flex border-b-4 ">
+            <div className="flex text-end ">
               <b className="flex text-end">Orden:</b>
               {orden.facturanum}
+            </div>
+            <button className="pointer ml-10" onClick={jsPDFGenerator}>
+                <MdPrint />
+              </button>
             </div>
             <div className="flex text-end text-lg">
               <b className="flex text-end">Vendedor: </b>
               {orden.vendedor === user._id
                 ? user.name
                 : "no tiene un vendedor asignado"}
-              <button className="pointer" onClick={jsPDFGenerator}>
-                <MdPrint />
-              </button>
+              
             </div>
           </div>
+         
         </div>
         <div
           className="bg-white pl-10 pr-10 text-start text-2xl rounded"

@@ -458,9 +458,7 @@ vendedor: orden.vendedor
                       <th className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
                         ELIMINAR
                       </th>
-                      <th className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
-                        Imprimir 
-                      </th>
+                     
                       
                       <th className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
                         ESTADO
@@ -625,14 +623,7 @@ vendedor: orden.vendedor
                               {<MdDelete />}
                             </p>
                           </td>
-                          <td className="px-3 py-2 ">
-                            <p
-                              className="text-gray-900 whitespace-no-wrap capitalize justify-center flex text-xl cursor-pointer"
-                           
-                            >
-                              {<MdPrint />}
-                            </p>
-                          </td>
+                       
                           
                           <td className="px-3 py-2">
                             <p className="text-gray-900 whitespace-no-wrap">

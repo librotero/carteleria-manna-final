@@ -5,10 +5,11 @@ import useInsumo from "../../store/insumo";
 import useUser from "../../store/user";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { BsFillCheckCircleFill } from "react-icons/bs";
-import { MdError, MdDone, MdArrowBack, MdEmail } from "react-icons/md";
+import { MdError, MdDone, MdArrowBack, MdEmail,MdPrint } from "react-icons/md";
 import { BsWhatsapp } from "react-icons/bs";
 import useClients from "../../store/clientes";
-
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import Swal from "sweetalert2";
 import moment from "moment";
 import useHeaders from "../../hooks/useHeaders";
@@ -43,6 +44,81 @@ const InsumoEdit = ({ setShowModal3, presupuesto, cliente }: Props) => {
     closeModal();
   };
 
+  const jsPDFGenerator = () => {
+    var doc = new jsPDF("p", "pt", "a4");
+    var item: any = 240;
+    var num = 0;
+    var totalcosto = 0;
+
+    doc.setFontSize(8);
+    doc.text(20, 20, `${moment().format("L")}`);
+    doc.text(280, 20, `Carteleria Manna`);
+
+    doc.setFontSize(10);
+    doc.text(35, 60, `PRESUPUESTO`);
+    doc.setFontSize(20);
+    doc.text(350, 65, `CARTELERIA MANNA`);
+
+    doc.setFontSize(10);
+    doc.text(35, 100, `FECHA: ${moment().format("L")}`);
+    doc.text(
+      180,
+      100,
+      `FECHA VÁLIDA: ${moment(presupuesto.fechavalida).format("L")}`
+    );
+    doc.text(35, 120, `CLIENTE: ${presupuesto.clientes}`);
+    doc.text(35, 140, `DIRECCIÓN: ${presupuesto.lugardecolocacion}`);
+    doc.text(35, 160, `CONTACTO: ${presupuesto.contacto}`);
+    doc.text(180, 160, `TELEFONO: ${cliente.telefono}`);
+    doc.setFontSize(20);
+
+    doc.text(240, 200, `CARTELES`);
+    doc.setFontSize(10);
+
+    doc.text(35, 230, `N°`);
+    doc.text(65, 230, `CARTELES`);
+    doc.text(190, 230, `BASE`);
+    doc.text(250, 230, `ALTURA`);
+    doc.text(310, 230, `ESTRUCTURA`);
+    doc.text(410, 230, `OTROS`);
+    doc.text(500, 230, `COSTO`);
+
+    for (let i = 0; i < presupuesto.carteles.length; i++) {
+      item = item + 20;
+
+      num = num + 1;
+
+      doc.text(35, item, `${num}`);
+      doc.text(65, item, `tipo de  ${presupuesto.carteles[i].name}`);
+      doc.text(190, item, ` ${presupuesto.carteles[i].base} `);
+      doc.text(250, item, `${presupuesto.carteles[i].altura}`);
+      doc.text(310, item, `${presupuesto.carteles[i].estructura}`);
+      doc.text(410, item, `${presupuesto.carteles[i].otros}`);
+      doc.text(510, item, `$${presupuesto.carteles[i].total}`);
+      totalcosto = totalcosto + presupuesto.carteles[i].total;
+    doc.setTextColor(220,220,220);
+
+    doc.text(35, item + 5, `__________________________________________________________________________________________`);
+    doc.setTextColor(0,0,0);
+  
+  }
+    doc.text(450, item + 30, `total costo:`);
+    doc.text(510, item + 30, `$${totalcosto}`);
+    doc.text(440, item + 40, `___________________`);
+    doc.text(450, item + 55, `total:`);
+    doc.text(510, item + 55, `$${presupuesto.montototal}`);
+
+    doc.setFontSize(20);
+
+    doc.text(200, item + 130, `OBSERVACIONES`);
+    doc.setFontSize(10);
+
+    doc.text(35, item + 180, `${presupuesto.observaciones}`, {align: 'justify',lineHeightFactor: 1.5,maxWidth:500});
+
+
+    doc.save(`presupuesto.pdf`);
+  };
+
   return (
     <div className="mb-10 md:p-5  sm:p-5 md:m-10 sm:m-5 ">
       <div className="relative  text-xl rounded">
@@ -54,6 +130,9 @@ const InsumoEdit = ({ setShowModal3, presupuesto, cliente }: Props) => {
             <MdArrowBack />
           </button>
           <h1>Presupuesto</h1>
+          <button className="pointer ml-5" onClick={jsPDFGenerator}>
+                <MdPrint />
+              </button>
         </div>
         <div className="">
           <div className="m-5 flex text-lg justify-center w-full">

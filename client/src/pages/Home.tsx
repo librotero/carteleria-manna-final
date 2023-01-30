@@ -27,15 +27,24 @@ const Home = () => {
   var obrero: any = user.name;
   var ord: any[];
   var ordImpresiones: any[];
+  var carteleriasfinales: any =[]
 
   ord = ordenes2.map((e: any) =>
     e.carteles.map((item: any) => item.category.includes("CARTELERIA") && e)
   );
+  carteleriasfinales= ord.filter((item:any, index:any)=>{
+    return ord.indexOf(item)===index
+    })
   var impresiones: any = []
   ordImpresiones = ordenes2.map((e: any) =>
   e.carteles.map((item: any) => item.category.includes("IMPRESIONES") && impresiones.unshift(e))
   
 );
+var impresionesfinales: any =[]
+impresionesfinales= impresiones.filter((item:any, index:any)=>{
+return impresiones.indexOf(item)===index
+})
+
 var ordenados : any = {}
 var finalOrd:any =[]
 for (let i = 0; i<ordImpresiones.length; i++){
@@ -147,10 +156,10 @@ for (let i = 0; i<ordImpresiones.length; i++){
         </div>
       )}
       {user.roles?.find((e: any) => e.name === "carteleria") && (
-        <HomeCarteleria ord={ord} />
+        <HomeCarteleria ord={carteleriasfinales} />
       )}
       {user.roles?.find((e: any) => e.name === "impresiones") && (
-        <HomeImpresiones ordImpresiones={impresiones} />
+        <HomeImpresiones ordImpresiones={impresionesfinales} />
       )}
 
     </Layout>
