@@ -74,6 +74,7 @@ const InsumoEdit = ({ setShowModal3, presupuesto, cliente }: Props) => {
 
     doc.text(240, 200, `CARTELES`);
     doc.setFontSize(10);
+    doc.setFont('bold');
 
     doc.text(35, 230, `N°`);
     doc.text(65, 230, `CARTELES`);
@@ -82,11 +83,12 @@ const InsumoEdit = ({ setShowModal3, presupuesto, cliente }: Props) => {
     doc.text(310, 230, `ESTRUCTURA`);
     doc.text(410, 230, `OTROS`);
     doc.text(500, 230, `COSTO`);
-
+    doc.setFont("normal");
     for (let i = 0; i < presupuesto.carteles.length; i++) {
       item = item + 20;
 
       num = num + 1;
+      doc.setFontType('bold');
 
       doc.text(35, item, `${num}`);
       doc.text(65, item, `tipo de  ${presupuesto.carteles[i].name}`);
