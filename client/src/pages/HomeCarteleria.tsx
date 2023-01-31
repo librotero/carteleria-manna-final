@@ -38,7 +38,7 @@ var color: any = "white";
                   href="#link1"
                   role="tablist"
                 >
-                  Entrada
+                  En Curso
                 </a>
               </li>
               <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -47,7 +47,7 @@ var color: any = "white";
                     "text-xs font-bold uppercase px-5 py-3 rounded-t-lg shadow-lg  block leading-normal " +
                     (openTab === 2
                       ? "text-black bg-white"
-                      : "text-" + color + "-600 bg-green-600")
+                      : "text-" + color + "-600 bg-yellow-600")
                   }
                   onClick={(e) => {
                     e.preventDefault();
@@ -57,7 +57,7 @@ var color: any = "white";
                   href="#link2"
                   role="tablist"
                 >
-                 En proceso
+                Terminadas
                 </a>
               </li>
               <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -66,7 +66,7 @@ var color: any = "white";
                     "text-xs font-bold uppercase px-5 py-3 rounded-t-lg shadow-lg block leading-normal " +
                     (openTab === 3
                       ? "text-black bg-white"
-                      : "text-" + color + "-600 bg-blue-600")
+                      : "text-" + color + "-600 bg-green-600")
                   }
                   onClick={(e) => {
                     e.preventDefault();
@@ -76,7 +76,7 @@ var color: any = "white";
                   href="#link3"
                   role="tablist"
                 >
-                  Terminadas
+                  Entregadas
                 </a>
               </li>
             </ul>

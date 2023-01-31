@@ -124,7 +124,7 @@ function Card({ e }: Props) {
         doc.text(280, 20, `Carteleria Manna`);
     
         doc.setFontSize(10);
-        doc.text(35, 60, `e DE FABRICACIÓN N° ${e.facturanum}`);
+        doc.text(35, 60, `TALLER`);
         doc.setFontSize(20);
         doc.text(350, 65, `CARTELERIA MANNA`);
     
@@ -174,10 +174,10 @@ function Card({ e }: Props) {
     
         doc.setFontSize(20);
     
-        doc.text(200, item + 150, `OBSERVACIONES`);
+        doc.text(200, item + 70, `OBSERVACIONES`);
         doc.setFontSize(10);
     
-        doc.text(35, item + 180, `${e.observaciones}`, {align: 'justify',lineHeightFactor: 1.5,maxWidth:18});
+        doc.text(35, item + 100, `${e.observaciones}`, {align: 'justify',lineHeightFactor: 1.5,maxWidth:500});
         
     
         doc.save(`orden${e.facturanum}.pdf`);
@@ -204,15 +204,15 @@ function Card({ e }: Props) {
                                   {
                                     e.stateCarteleria === "pendiente"
                                     ? <h1 className="text-white bg-red-600 rounded-lg align-center text-center p-2 m-2">
-                                    Pendiente
+                                    En curso
                                   </h1>
                                   :
                                  ""
                                   }
                                   {
                                      e.stateCarteleria ==="realizada"
-                                     ? <h1 className="text-white bg-green-600 rounded-lg align-center text-center p-2 m-2">
-                                     Realizada
+                                     ? <h1 className="text-white bg-yellow-600 rounded-lg align-center text-center p-2 m-2">
+                                     Terminada
                                    </h1>
                                    :
                                   "" 
@@ -220,8 +220,8 @@ function Card({ e }: Props) {
                                   {
                                     e.stateCarteleria ==="entregada"
                                     ?
-                                    <h1 className="text-white bg-blue-600 rounded-lg align-center text-center p-2 m-2">
-                                    Entregado
+                                    <h1 className="text-white bg-green-600 rounded-lg align-center text-center p-2 m-2">
+                                    Entregada
                                   </h1>
                                   : ""
                                   }

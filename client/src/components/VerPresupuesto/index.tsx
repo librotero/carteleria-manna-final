@@ -175,8 +175,8 @@ const InsumoEdit = ({ setShowModal3, presupuesto, cliente }: Props) => {
             </div>
             )}
             <div className="m-5 w-1/3">
-              <b className="text-gray-600">Fecha de entrega </b>
-              <h1>{moment(presupuesto.fechaentrega).format("L")}</h1>
+              <b className="text-gray-600">Fecha Válida </b>
+              <h1>{moment(presupuesto.fechavalida).format("L")}</h1>
             </div>
 
            

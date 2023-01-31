@@ -514,17 +514,17 @@ vendedor: orden.vendedor
                            <div>
                              {
                            orden.stateImpresiones ==="realizada"
-                           ?<p className="text-white w-20 bg-green-600 rounded p-1 text-center">En curso</p>
+                           ?<p className="text-white w-20 bg-yellow-600 rounded p-1 text-center">Terminada</p>
                            :""
                            }
                            {
                            orden.stateImpresiones ==="pendiente"
-                           ?<p className="text-white w-20 bg-red-600 rounded align-center text-center p-1">Entradas</p>
+                           ?<p className="text-white w-20 bg-red-600 rounded align-center text-center p-1">En curso</p>
                            :""
                            }
                            {
                              orden.stateImpresiones === "entregada"
-                             ? <p className="text-white w-20 bg-blue-600 rounded  align-center text-center p-1">Terminada</p>
+                             ? <p className="text-white w-20 bg-green-600 rounded  align-center text-center p-1">Entregada</p>
                              :
                              ""
                            }
@@ -541,17 +541,17 @@ vendedor: orden.vendedor
                            <div>
                              {
                            orden.stateCarteleria ==="realizada"
-                           ?<p className="text-white w-20 bg-green-600 rounded p-1 text-center">En curso</p>
+                           ?<p className="text-white w-20 bg-yellow-600 rounded p-1 text-center">Terminada</p>
                            :""
                            }
                            {
                            orden.stateCarteleria ==="pendiente"
-                           ?<p className="text-white w-20 bg-red-600 rounded align-center text-center p-1">Entrada</p>
+                           ?<p className="text-white w-20 bg-red-600 rounded align-center text-center p-1">En curso</p>
                            :""
                            }
                            {
                              orden.stateCarteleria === "entregada"
-                             ? <p className="text-white w-20 bg-blue-600 rounded  align-center text-center p-1">Terminada</p>
+                             ? <p className="text-white w-20 bg-blue-600 rounded  align-center text-center p-1">Entregada</p>
                              :
                              ""
                            }
