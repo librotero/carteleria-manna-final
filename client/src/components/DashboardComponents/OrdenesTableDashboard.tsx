@@ -183,23 +183,23 @@ const OrdenesTableDashboard =({ordenes}:Props)=>{
                            <div>
                              {
                            orden.stateImpresiones ==="realizada"
-                           ?<p className="text-white w-20 bg-green-600 rounded p-1 text-center">En curso</p>
+                           ?<p className="text-white w-20 bg-yellow-600 rounded p-1 text-center">Terminada</p>
                            :""
                            }
                            {
                            orden.stateImpresiones ==="pendiente"
-                           ?<p className="text-white w-20 bg-red-600 rounded align-center text-center p-1">Entradas</p>
+                           ?<p className="text-white w-20 bg-red-600 rounded align-center text-center p-1">En curso</p>
                            :""
                            }
                            {
                              orden.stateImpresiones === "entregada"
-                             ? <p className="text-white w-20 bg-blue-600 rounded  align-center text-center p-1">Terminada</p>
+                             ? <p className="text-white w-20 bg-green-600 rounded  align-center text-center p-1">Entregada</p>
                              :
                              ""
                            }
                            </div>
                          :
-                         <p className="text-white w-20 bg-red-600 rounded align-center text-center p-1">Entrada</p>
+                         <p className="text-white w-20 bg-red-600 rounded align-center text-center p-1">En curso</p>
                           }
                           </p>
                           </td>
@@ -210,23 +210,23 @@ const OrdenesTableDashboard =({ordenes}:Props)=>{
                            <div>
                              {
                            orden.stateCarteleria ==="realizada"
-                           ?<p className="text-white w-20 bg-green-600 rounded p-1 text-center">En curso</p>
+                           ?<p className="text-white w-20 bg-yellow-600 rounded p-1 text-center">Terminada</p>
                            :""
                            }
                            {
                            orden.stateCarteleria ==="pendiente"
-                           ?<p className="text-white w-20 bg-red-600 rounded align-center text-center p-1">Entrada</p>
+                           ?<p className="text-white w-20 bg-red-600 rounded align-center text-center p-1">En curso</p>
                            :""
                            }
                            {
                              orden.stateCarteleria === "entregada"
-                             ? <p className="text-white w-20 bg-blue-600 rounded  align-center text-center p-1">Terminada</p>
+                             ? <p className="text-white w-20 bg-green-600 rounded  align-center text-center p-1">Entregada</p>
                              :
                              ""
                            }
                            </div>
                          :
-                         <p className="text-white w-20 bg-red-600 rounded align-center text-center p-1">Entrada</p>
+                         <p className="text-white w-20 bg-red-600 rounded align-center text-center p-1">En curso</p>
                           }
                           </p>
                           </td>
@@ -255,7 +255,7 @@ const OrdenesTableDashboard =({ordenes}:Props)=>{
                             <p className="text-gray-900 whitespace-no-wrap">
                               {
                                 orden.montototal===orden.seña+orden.resta
-                                ?<h1 className="text-white w-20 bg-violet-600 rounded p-1 text-center">Pagada</h1>
+                                ?<h1 className="text-white w-20 bg-green-600 rounded p-1 text-center">Pagada</h1>
                                 :<h1 className="text-white w-20 bg-yellow-600 rounded p-1 text-center">Sin Pagar</h1>
                               }
                             </p>
