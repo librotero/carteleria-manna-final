@@ -51,7 +51,7 @@ const Charts = ({sumOrdenesPendientesCarteleria, sumOrdenesPendientesImpresiones
  >
    <Transform method={["transpose", "stackNormalized"]}>
      <Pies
-       colors={["red", "green", "blue"]}
+       colors={["red", "yellow", "green"]}
        combined
        cornerRadius={5}
        innerPadding={10}
