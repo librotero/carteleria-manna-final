@@ -84,7 +84,7 @@ const VerOrdenes = ({ setShowModal4, orden }: Props) => {
     doc.text(250, 230, `ALTURA`);
     doc.text(310, 230, `ESTRUCTURA`);
     doc.text(410, 230, `OTROS`);
-    doc.text(500, 230, `COSTO`);
+    doc.text(500, 230, `VALOR`);
     doc.setFont("SourceSansPro", "normal")
 
 
@@ -102,8 +102,8 @@ const VerOrdenes = ({ setShowModal4, orden }: Props) => {
       doc.text(250, item, `${orden.carteles[i].altura}`);
       doc.text(310, item, `${orden.carteles[i].estructura}`);
       doc.text(410, item, `${orden.carteles[i].otros}`);
-      doc.text(510, item, `$${orden.carteles[i].total}`);
-      totalcosto = totalcosto + orden.carteles[i].total;
+      doc.text(510, item, `$${orden.carteles[i].valortotal}`);
+      totalcosto = totalcosto + orden.carteles[i].valortotal;
       doc.setTextColor(220,220,220);
 
       doc.text(35, item + 5, `__________________________________________________________________________________________`);

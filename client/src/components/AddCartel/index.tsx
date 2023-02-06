@@ -31,7 +31,10 @@ interface Cartel {
     total: number;
     estructura: string;
     otros: string;
-    category: string[]
+    category: string[];
+    coeficiente: number;
+    valortotal: number;
+
   }
 
   var totalArray: any = [];
@@ -66,6 +69,8 @@ const AddCartel = ({values, setValues, montoModificado,setMontoModificado}:Props
         estructura: "",
         category: [],
         otros: "",
+        coeficiente:0,
+        valortotal:0
       });
       var totales: any = values.carteles;
       const handleSelectFaz= (e: React.ChangeEvent<HTMLSelectElement>)=>{
@@ -122,6 +127,8 @@ const AddCartel = ({values, setValues, montoModificado,setMontoModificado}:Props
           estructura: "",
           category: [],
           otros: "",
+          coeficiente:0,
+          valortotal:0
         })
        }
     const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -136,7 +143,7 @@ const AddCartel = ({values, setValues, montoModificado,setMontoModificado}:Props
         if (cartel.cant > 0) {
           totales = [...totales, cartel];
           console.log("totales es", totales);
-          sumTotales = totales.map((a: any) => a.total);
+          sumTotales = totales.map((a: any) => a.valortotal);
           montofinal = sumTotales.reduce((a: any, b: any) => a + b, 0);
           setValues({
             ...values,
@@ -155,6 +162,8 @@ const AddCartel = ({values, setValues, montoModificado,setMontoModificado}:Props
           estructura: "",
           category: [],
           otros: "",
+          coeficiente: 0,
+          valortotal:0
         });
       };
       const agregarCartel = () => {
@@ -230,7 +239,7 @@ const AddCartel = ({values, setValues, montoModificado,setMontoModificado}:Props
               
               <div className="ml-1">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                  Total M <sup>2</sup>
+                   Metros <sup>2</sup>
                 </label>
                 <input
                   className="appearance-none  block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -251,7 +260,7 @@ const AddCartel = ({values, setValues, montoModificado,setMontoModificado}:Props
               </div>
               <div className="ml-1">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                  total
+                  total costo
                 </label>
                <div className="relative">
                 <label className="absolute left-2 top-2.5 ">
@@ -337,6 +346,38 @@ const AddCartel = ({values, setValues, montoModificado,setMontoModificado}:Props
                   value={cartel.cant}
                   onChange={handleChange}
                 />
+              </div>
+              <div className="ml-1">
+                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                  coeficiente
+                </label>
+                <input
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="grid-city"
+                  type="number"
+                  placeholder="coeficiente"
+                  name="coeficiente"
+                  value={cartel.coeficiente}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="ml-1">
+                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                  Total
+                </label>
+                <input
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="grid-city"
+                  type="number"
+                  placeholder="coeficiente"
+                  name="valortotal"
+                  value={cartel.coeficiente?
+                  cartel.valortotal=((cartel.coeficiente*cartel.total)/100)+cartel.total
+                :
+              ""}
+                  onChange={handleChange}
+                />
+                  
               </div>
             </div>
             <div className="justify-end flex pr-3 pb-3 m-5">
