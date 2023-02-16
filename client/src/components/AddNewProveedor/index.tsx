@@ -127,7 +127,7 @@ const AddNewProveedor = ({ setShowModal, proveedor }: Props) => {
 					<div className='flex gap-4'>
 						<div className='w-full'>
 							<input
-								type='text'
+								type='number'
 								name='telefono'
 								className='px-4 py-3 mt-4 w-full rounded-md border bg-gray-100 appearance-none border-gray-300 focus:outline-none focus:bg-white focus:ring-0 text-sm'
 								placeholder='Telefono'
@@ -166,7 +166,7 @@ const AddNewProveedor = ({ setShowModal, proveedor }: Props) => {
 						<p className='text-red-600 text-sm'>{errors.email}</p>
 					)}
 					<input
-						type='text'
+						type='number'
 						name='cuit'
 						className='px-4 py-3 mt-4 w-full rounded-md border bg-gray-100 appearance-none border-gray-300 focus:outline-none focus:bg-white focus:ring-0 text-sm'
 						placeholder='CUIT'
