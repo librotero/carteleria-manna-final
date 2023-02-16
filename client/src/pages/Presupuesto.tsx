@@ -372,6 +372,9 @@ const [cliente, setCliente]= useState({})
                     <th className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
                      estado
                     </th>
+                    <th className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
+                     vigencia
+                    </th>
                   </tr>
                 </thead>
                 {!loading && (
@@ -458,8 +461,13 @@ const [cliente, setCliente]= useState({})
                           </p>
                         </td>
                         <td className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
-                      {presupuesto.orden===false? <h1 className="bg-gray-600 text-white text-center w-20 rounded-lg p-1">Denegado</h1> : <h1 className="bg-yellow-600 text-center w-20 rounded-lg p-1 text-white">Aprobado</h1>}
+                      {presupuesto.orden===false? <h1 className="bg-red-600 text-white text-center w-20 rounded-lg p-1">Pendiente</h1> : <h1 className="bg-green-600 text-center w-20 rounded-lg p-1 text-white">Aprobado</h1>}
                     </td>
+                     <td className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
+                      {
+                        moment(presupuesto.fechavalida).format("L")> moment(presupuesto.fecha).format("L") && presupuesto.orden===false? <h1>Vencido</h1>: <h1>vigente</h1>
+                      }
+                         </td>
                       </tr>
                     ))}
                   </tbody>

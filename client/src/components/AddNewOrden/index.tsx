@@ -238,7 +238,7 @@ console.log("hola estos", newArray, values)
   }
   const deleteCarteles =(e:any)=>{
     var  array: any = values.carteles.filter((item:any)=>e.name!==item.name)
-    var nuevo1: any = array.map((e:any)=>e.total)
+    var nuevo1: any = array.map((e:any)=>e.valortotal)
    var total: any =  nuevo1.reduce((a: any, b: any) => a + b, 0)
    console.log("hey hey hye ai you gatrit", array, total)
      setValues({

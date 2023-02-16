@@ -196,7 +196,7 @@ console.log("holaaaaaaaaaaaaa", values)
     <div className="border-b-4 border-[#77B327] rounded border-b-4 p-5 mb-1 flex">
       
       <div className=" w-1/2">
-       <h1 className="text-3xl p-5">Crear Orden</h1>
+       <h1 className="text-3xl p-5">Crear Presupuesto</h1>
       </div>
 
       <button

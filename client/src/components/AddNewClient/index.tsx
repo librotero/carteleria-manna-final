@@ -67,7 +67,7 @@ const AddNewClient = ({ setShowModal, clientes }: Props) => {
 		setShowModal(false);
 		closeModal();
 	};
-
+const [ condicionIva, setCondicionIva ] =useState(["Responsable Inscrito", "Excento", "Monotributista"])
 	// const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
 	// 	let { value } = e.currentTarget;
 
@@ -76,7 +76,14 @@ const AddNewClient = ({ setShowModal, clientes }: Props) => {
 	// 		roles: [value],
 	// 	});
 	// };
-
+	const handleSelectCondicionIva= (e: React.ChangeEvent<HTMLSelectElement>)=>{
+		let {value}= e.currentTarget;
+		  setValues({
+			...values,
+			condicioniva: value
+		  });
+		
+	  }
 	useEffect(() => {
 		success &&
 			setValues({
@@ -149,6 +156,7 @@ const AddNewClient = ({ setShowModal, clientes }: Props) => {
 								</p>
 							)}
 						</div>
+
 					</div>
 					<input
 						type='text'
@@ -174,17 +182,6 @@ const AddNewClient = ({ setShowModal, clientes }: Props) => {
 					)}
 					<input
 						type='text'
-						name='condicioniva'
-						className='px-4 py-3 mt-4 w-full rounded-md border bg-gray-100 appearance-none border-gray-300 focus:outline-none focus:bg-white focus:ring-0 text-sm'
-						placeholder='Cindición I.V.A'
-						value={values.condicioniva}
-						onChange={handleChange}
-					/>
-					{errors.password2 && (
-						<p className='text-red-600 text-sm'>{errors.password2}</p>
-					)}
-					<input
-						type='text'
 						name='razonsocial'
 						className='px-4 py-3 mt-4 w-full rounded-md border bg-gray-100 appearance-none border-gray-300 focus:outline-none focus:bg-white focus:ring-0 text-sm'
 						placeholder='Razón Social'
@@ -194,6 +191,23 @@ const AddNewClient = ({ setShowModal, clientes }: Props) => {
 					{errors.password2 && (
 						<p className='text-red-600 text-sm'>{errors.password2}</p>
 					)}
+					<div className="w-full">
+              
+              <select
+                className="block appearance-none w-full mt-4 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-state"
+                name="condicioniva"
+                value={values.condicioniva}
+                onChange={handleSelectCondicionIva}
+              >
+                <option value="" defaultValue={""} disabled>
+                  Seleccionar condición fiscal
+                </option>
+                {condicionIva.map((e: any) => (
+                  <option value={e}>{e}</option>
+                ))}
+              </select>
+            </div>
 					<div className='flex items-center mt-6 justify-end p-6 border-t border-solid border-slate-200 rounded-b'>
 						<button
 							className='text-red-600 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'

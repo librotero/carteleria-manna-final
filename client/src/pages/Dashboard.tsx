@@ -242,11 +242,11 @@ const Dashboard = () => {
                   <h1 className="m-1 uppercase">entradas</h1>
                 </div>
                 <div className="flex">
-                  <div className="bg-green-600 p-2 text-white font-bold text-sm rounded-full w-5 h-5 text-center m-2 uppercase"></div>
+                  <div className="bg-yellow-600 p-2 text-white font-bold text-sm rounded-full w-5 h-5 text-center m-2 uppercase"></div>
                   <h1 className="m-1 uppercase">en curso</h1>
                 </div>
                 <div className="flex">
-                  <div className="bg-blue-600 p-2 text-white font-bold text-sm rounded-full w-5 h-5 text-center m-2 uppercase"></div>
+                  <div className="bg-green-600 p-2 text-white font-bold text-sm rounded-full w-5 h-5 text-center m-2 uppercase"></div>
                   <h1 className="m-1 uppercase">terminadas</h1>
                 </div>
               </div>
@@ -285,11 +285,11 @@ const Dashboard = () => {
                   <h1 className="m-1 uppercase">entradas</h1>
                 </div>
                 <div className="flex">
-                  <div className="bg-green-600 p-2 text-white font-bold text-sm rounded-full w-5 h-5 text-center m-2 uppercase"></div>
+                  <div className="bg-yellow-600 p-2 text-white font-bold text-sm rounded-full w-5 h-5 text-center m-2 uppercase"></div>
                   <h1 className="m-1 uppercase">en curso</h1>
                 </div>
                 <div className="flex">
-                  <div className="bg-blue-600 p-2 text-white font-bold text-sm rounded-full w-5 h-5 text-center m-2 uppercase"></div>
+                  <div className="bg-green-600 p-2 text-white font-bold text-sm rounded-full w-5 h-5 text-center m-2 uppercase"></div>
                   <h1 className="m-1 uppercase">terminadas</h1>
                 </div>
               </div>
@@ -328,11 +328,11 @@ const Dashboard = () => {
                   <h1 className="m-1 uppercase">entradas</h1>
                 </div>
                 <div className="flex">
-                  <div className="bg-green-600 p-2 text-white font-bold text-sm rounded-full w-5 h-5 text-center m-2 uppercase"></div>
+                  <div className="bg-yellow-600 p-2 text-white font-bold text-sm rounded-full w-5 h-5 text-center m-2 uppercase"></div>
                   <h1 className="m-1 uppercase">en curso</h1>
                 </div>
                 <div className="flex">
-                  <div className="bg-blue-600 p-2 text-white font-bold text-sm rounded-full w-5 h-5 text-center m-2 uppercase"></div>
+                  <div className="bg-green-600 p-2 text-white font-bold text-sm rounded-full w-5 h-5 text-center m-2 uppercase"></div>
                   <h1 className="m-1 uppercase">terminadas</h1>
                 </div>
               </div>
