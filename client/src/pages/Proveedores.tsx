@@ -3,7 +3,6 @@ import Layout from "../components/Layout/index";
 import { useEffect, useState, Fragment } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Modal from "../components/Modal";
-import AddNewProveedor from "../components/AddNewProveedor";
 import ModalEdit from "../components/ModalEdit";
 import VerProveedor from "../components/VerProveedor";
 import ModalVer from "../components/ModalVer";
@@ -30,10 +29,11 @@ import { FiEdit3 } from "react-icons/fi";
 import Loader from "../components/Loader";
 import useHeaders from "../hooks/useHeaders";
 import useProveedores from "../store/proveedores";
+import Form from "../components/Form";
 
 const Proveedores = () => {
   const { users, getUsers } = useUser((state:any) => state);
-  const { getProveedoresAll, proveedores, deleteProveedores, loading } =
+  const { getProveedoresAll, proveedores, deleteProveedores, loading, errors,addProveedores, closeModal } =
     useProveedores((state:any) => state);
     const { getInsumos, insumos2 } =
     useInsumo((state:any) => state);
@@ -62,7 +62,17 @@ const Proveedores = () => {
   const [sortLastName, setSortLastName] = useState<null | boolean>(null);
 const [insumosProveedor, setInsumosProveedor]=useState([])
 const [name, setName] = useState('');
-
+const [values, setValues] = useState({
+  name: "",
+  telefono: "",
+  cuit: "",
+  email: "",
+  direccion: "",
+  web: "",
+});
+const [valuesBody, setValuesBody] = useState([
+  "name", "telefono", "cuit", "email", "direccion", "web"
+]);
   useEffect(() => {
     getProveedoresAll(accessToken, limit, page, name);
     getInsumos(headers)
@@ -487,7 +497,8 @@ const [name, setName] = useState('');
           </button>
         </div>
         <Modal showModal={showModal} setShowModal={setShowModal}>
-          <AddNewProveedor setShowModal={setShowModal} proveedor={proveedores.proveedores} />
+        <Form values={values} valuesBody={valuesBody} errors={errors} add={addProveedores} setValues={setValues} setShowModal={setShowModal} clientes={proveedores.proveedores} TextForm={"Crear Proveedor"} closeModal={closeModal} />
+
         </Modal>
       </div>
     </Layout>

@@ -28,13 +28,12 @@ import { FiEdit3 } from "react-icons/fi";
 import Loader from "../components/Loader";
 import useHeaders from "../hooks/useHeaders";
 import useClients from "../store/clientes";
-import AddNewClient from "../components/AddNewClient";
 import ModalEdit from "../components/ModalEdit";
 import Form from "../components/Form";
 
 const Clientes = () => {
   const { users, getUsers } = useUser((state:any) => state);
-  const { clientes, getClients, getClientesAll, loading, success, deleteClients, closeModal, addClient, errors } = useClients(
+  const { clientes, getClients, putClients, getClientesAll, loading, success, deleteClients, closeModal, addClient, errors } = useClients(
     (state:any) => state
   );
    const { ordenes, ordenes2, getOrdenes} = useOrdenes(
@@ -436,12 +435,8 @@ const Clientes = () => {
                             showModal2={showModal2}
                             setShowModal2={setShowModal2}
                           >
-                            <EditCliente
-                              setShowModal2={setShowModal2}
-                              client={clientEdit}
-                              setRefresh={setRefresh}
-                              refresh={refresh}
-                            />
+                      <Form  values={clientEdit} valuesBody={valuesBody} errors={errors} add={putClients} setValues={setValues} setShowModal={setShowModal2} clientes={clientes.clientes} TextForm={"Editar Cliente"} closeModal={closeModal} />
+
                           </ModalEdit>
                         </td>
                         <td className="px-3 py-2">
@@ -515,7 +510,7 @@ const Clientes = () => {
           </button>
         </div>
         <Modal showModal={showModal} setShowModal={setShowModal}>
-          <Form values={values} valuesBody={valuesBody} errors={errors} add={addClient} setValues={setValues} setShowModal={setShowModal} clientes={clientes.clientes} TextForm={"Crear Cliente"} closeModal={closeModal} />
+          <Form  values={values} valuesBody={valuesBody} errors={errors} add={addClient} setValues={setValues} setShowModal={setShowModal} clientes={clientes.clientes} TextForm={"Crear Cliente"} closeModal={closeModal} />
         </Modal>
       </div>
     </Layout>

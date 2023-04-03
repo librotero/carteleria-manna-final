@@ -6,7 +6,6 @@ import Modal from "../components/Modal";
 import ModalVer from "../components/ModalVer";
 
 import VerInsumo from '../components/VerInsumo'
-import AddNewInsumo from "../components/addNewInsumo";
 import EditInsumo from "../components/EditInsumo";
 import shallow from "zustand/shallow";
 import useInsumo from "../store/insumo";
@@ -30,11 +29,11 @@ import  Swal from 'sweetalert2';
 import Loader from "../components/Loader";
 import useHeaders from "../hooks/useHeaders";
 import useClients from "../store/clientes";
-import AddNewClient from "../components/AddNewClient";
 import ModalEdit from "../components/ModalEdit";
+import Form from "../components/Form";
 const Clientes = () => {
   const { users, getUsers } = useUser((state:any) => state, shallow);
-  const { getInsumosAll, getInsumos, insumos, insumos2, deleteIsumos, loading, success } = useInsumo(
+  const { getInsumosAll, getInsumos, postInsumo, errors, insumos, insumos2, deleteIsumos, loading, success, closeModal } = useInsumo(
     (state:any) => state
   );
   const { proveedores, getProveedores } = useProveedor((state:any) => state);
@@ -63,6 +62,19 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
   const [sortLastName, setSortLastName] = useState<null | boolean>(null);
   const [accessToken] = useLocalStorage();
   const [name, setName] = useState('');
+  const [values, setValues] = useState({
+    id: "",
+    name: "",
+    descripcion: "",
+    unidad: "",
+    costo: "",
+    category: "",
+    proveedor: "",
+    another:""
+	});
+  const [valuesBody, setValuesBody] = useState([
+    "name", "descripcion", "unidad", "costo", "category", "proveedor"
+  ]);
 
   const headers = useHeaders(accessToken);
   useEffect(() => {
@@ -492,7 +504,7 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
           </button>
         </div>
         <Modal showModal={showModal} setShowModal={setShowModal}>
-          <AddNewInsumo setShowModal={setShowModal} insumos={insumos.insumos} />
+        <Form values={values} valuesBody={valuesBody} errors={errors} add={postInsumo} setValues={setValues} setShowModal={setShowModal} clientes={insumos.insumos} TextForm={"Crear insumos"} closeModal={closeModal} />
         </Modal>
       </div>
     </Layout>
