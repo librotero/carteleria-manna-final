@@ -30,10 +30,11 @@ import useHeaders from "../hooks/useHeaders";
 import useClients from "../store/clientes";
 import AddNewClient from "../components/AddNewClient";
 import ModalEdit from "../components/ModalEdit";
+import Form from "../components/Form";
 
 const Clientes = () => {
   const { users, getUsers } = useUser((state:any) => state);
-  const { clientes, getClients, getClientesAll, loading, success, deleteClients } = useClients(
+  const { clientes, getClients, getClientesAll, loading, success, deleteClients, closeModal, addClient, errors } = useClients(
     (state:any) => state
   );
    const { ordenes, ordenes2, getOrdenes} = useOrdenes(
@@ -55,6 +56,18 @@ const Clientes = () => {
   const [sortName, setSortName] = useState<null | boolean>(null);
   const [sortLastName, setSortLastName] = useState<null | boolean>(null);
   const [ordenesPorMes, setOrdenesPorMes] = useState([])
+  const [values, setValues] = useState({
+		name: "",
+		telefono: "",
+		cuit: "",
+		email: "",
+		direccion: "",
+		condicioniva: "",
+		razonsocial: "",
+	});
+  const [valuesBody, setValuesBody] = useState([
+    "name", "telefono", "cuit", "email", "direccion", "condicioniva", "razonsocial"
+  ]);
   const [clientEdit, setClientEdit] = useState({
     id: "",
     name: "",
@@ -72,6 +85,7 @@ const Clientes = () => {
   useEffect(() => {
     getClientesAll(accessToken, page, limit, name);
     getOrdenes(headers)
+    console.log("holaaaaaaaaaaaaaaaaaaaaa", values)
    
   }, [page, limit, name]);
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -501,7 +515,7 @@ const Clientes = () => {
           </button>
         </div>
         <Modal showModal={showModal} setShowModal={setShowModal}>
-          <AddNewClient setShowModal={setShowModal} clientes={clientes.clientes} />
+          <Form values={values} valuesBody={valuesBody} errors={errors} add={addClient} setValues={setValues} setShowModal={setShowModal} clientes={clientes.clientes} TextForm={"Crear Cliente"} closeModal={closeModal} />
         </Modal>
       </div>
     </Layout>
