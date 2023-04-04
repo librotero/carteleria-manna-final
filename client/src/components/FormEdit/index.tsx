@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Swal from 'sweetalert2';
-import { MdError, MdExitToApp } from "react-icons/md";
+import useLocalStorage from '../../hooks/useLocalStorage';
+import useHeaders from '../../hooks/useHeaders';
 
 type Props = {
     setShowModal: any;
-    clientes: any;
     TextForm: any;
     closeModal: any;
     values: any;
@@ -14,46 +14,61 @@ type Props = {
     valuesBody: any;
 };
 
-const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeModal, values, valuesBody }: Props) => {
 
 
-    // close form 
-    const handleCloseModal = () => {
-        setShowModal(false);
-        closeModal();
-    };
 
-    const handleSubmit = (e: React.SyntheticEvent) => {
-        e.preventDefault();
+const FormEdit = ({ errors, setShowModal, add, setValues,  TextForm, closeModal, values, valuesBody }: Props) => {
+    
+    const [accessToken] = useLocalStorage();
+    const headers = useHeaders(accessToken);
+    
+    //state
+   
+    
 
-      
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Cambios guardados exitosamente',
-                showConfirmButton: false,
-                timer: 1500
-            })
-            console.log("hola parece qu me va bien ", values)
-            add(values);
-            var newArray: any = clientes
-            newArray.push(values)
-            clientes = newArray
-      
-        handleCloseModal()
-    };
+    //actions 
 
-
-    const handleChange = (
-        e: React.FormEvent<HTMLInputElement>
-    ): void => {
+    const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
         const { name, value } = e.currentTarget;
         setValues({
             ...values,
             [name]: value,
         });
-        console.log("joaaaaaaaaaaaaaaaa", values)
+        console.log("hola soy un cambio", name , value)
+        console.log("hola soy tota",values  )
+
     };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        closeModal();
+    };
+
+
+    const handleSubmit = (e: React.SyntheticEvent) => {
+        e.preventDefault()
+
+        Swal.fire({
+            title: '¿Desea guardar los cambios?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonColor: '#77B327',
+            confirmButtonText: 'Guardar',
+            denyButtonText: `No guardar`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire('¡Guardado exitosamente!', '', 'success')
+                add(values, accessToken);
+                handleCloseModal();
+            } else if (result.isDenied) {
+                Swal.fire('Los cambios no han sido guardados', '', 'info')
+
+            }
+        })
+    };
+
+    const [valorInput, setValorInput] = useState<string>("hola");
+
     return (
         <div>
             <div className="flex  bg-[#77B327] text-white  p-5 mb-1 grid sm:gap-1  sm:grid-cols-1 md:gap-2 md:grid-cols-2">
@@ -66,7 +81,7 @@ const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeM
                     className=" text-white  text-4xl w-full h-10  flex justify-end"
                     onClick={handleCloseModal}
                 >
-                    <MdExitToApp />
+                    x
                 </button>
             </div>
 
@@ -75,7 +90,7 @@ const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeM
                 <div>
                     <div className='flex flex-wrap ml-10 '>
                         {
-                            valuesBody.map((e: any, index:any) => (
+                            valuesBody.map((e: any, index: any) => (
                                 <div className='m-1' key={index}>
                                     <p className='m-1'>
                                         {e.name}
@@ -84,7 +99,7 @@ const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeM
                                         type='text'
                                         name={e.name}
                                         className='px-4 py-3 w-full rounded-md border bg-gray-100 appearance-none border-gray-300 focus:outline-none focus:bg-white focus:ring-0 text-sm'
-                                        placeholder={e.name}
+                                        placeholder={e.value}
                                         value={values.e}
                                         onChange={handleChange}
                                     />
@@ -119,4 +134,4 @@ const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeM
     )
 }
 
-export default Form
+export default FormEdit

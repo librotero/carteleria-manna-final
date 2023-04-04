@@ -6,7 +6,6 @@ import { useEffect, useState, Fragment } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Modal from "../components/Modal";
 import CreateNewUser from "../components/CreateNewUser";
-import EditCliente from "../components/EditCliente";
 //import shallow from "../../zustand/shallow";
 import Swal from 'sweetalert2'
 import ModalVer from "../components/ModalVer";
@@ -30,9 +29,10 @@ import useHeaders from "../hooks/useHeaders";
 import useClients from "../store/clientes";
 import ModalEdit from "../components/ModalEdit";
 import Form from "../components/Form";
+import FormEdit from "../components/FormEdit";
+import Table from "../components/Table";
 
 const Clientes = () => {
-  const { users, getUsers } = useUser((state:any) => state);
   const { clientes, getClients, putClients, getClientesAll, loading, success, deleteClients, closeModal, addClient, errors } = useClients(
     (state:any) => state
   );
@@ -41,21 +41,15 @@ const Clientes = () => {
   );
   const [accessToken] = useLocalStorage();
   const headers = useHeaders(accessToken);
-  const [rol, setRol] = useState("");
-  const [sort, setSort] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
 
-  const[refresh, setRefresh]=useState(false)
-
-  const [sortUsername, setSortUsername] = useState<null | boolean>(true);
-  const [sortName, setSortName] = useState<null | boolean>(null);
-  const [sortLastName, setSortLastName] = useState<null | boolean>(null);
   const [ordenesPorMes, setOrdenesPorMes] = useState([])
   const [values, setValues] = useState({
+    id: "",
 		name: "",
 		telefono: "",
 		cuit: "",
@@ -65,7 +59,13 @@ const Clientes = () => {
 		razonsocial: "",
 	});
   const [valuesBody, setValuesBody] = useState([
-    "name", "telefono", "cuit", "email", "direccion", "condicioniva", "razonsocial"
+    {name:"name", value:""}, 
+    {name:"telefono", value:""}, 
+    {name:"cuit", value:""}, 
+    {name:"email", value:""}, 
+    {name:"direccion", value:""}, 
+    {name:"condicioniva", value:""}, 
+    {name:"razonsocial", value:""}
   ]);
   const [clientEdit, setClientEdit] = useState({
     id: "",
@@ -78,7 +78,9 @@ const Clientes = () => {
     razonsocial: "",
   });
   const [name, setName] = useState('');
-
+  const [tableItems, setTableItems]=useState([
+    "nombre", "telefono", "direccion", "email", "cuit", "condición i.v.a", "ver", "editar", "eliminar"
+  ])
  
 
   useEffect(() => {
@@ -87,6 +89,7 @@ const Clientes = () => {
     console.log("holaaaaaaaaaaaaaaaaaaaaa", values)
    
   }, [page, limit, name]);
+  
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const {value } = e.currentTarget;
     setName(value);
@@ -119,70 +122,22 @@ const Clientes = () => {
 			}
 		  })
   };
-  console.log(clientes);
-
-  const nextPage = (): void => {
-    page < clientes?.totalPages && setPage(page + 1);
-  };
-
-  const prevPage = (): void => {
-    page > 1 && setPage(page - 1);
-  };
-
-  const firtPage = (): void => {
-    page !== 1 && setPage(1);
-  };
-
-  const lastPage = (): void => {
-    page !== clientes.totalPages && setPage(clientes.totalPages);
-  };
 
   const userPerPage = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     let { value } = e.currentTarget;
     setLimit(Number(value));
   };
 
-  const sortByUsername = (): void => {
-    if (!sortUsername || sortUsername === null) {
-      setSort("username");
-      setSortUsername(true);
-    } else {
-      setSort("username,desc");
-      setSortUsername(false);
-    }
-    setSortName(null);
-    setSortLastName(null);
-  };
 
-  const sortByName = (): void => {
-    if (!sortName || sortName === null) {
-      setSort("name");
-      setSortName(true);
-    } else {
-      setSort("name,desc");
-      setSortName(false);
-    }
-    setSortUsername(null);
-    setSortLastName(null);
-  };
 
-  const sortByLastName = (): void => {
-    if (!sortLastName || sortLastName === null) {
-      setSort("lastname");
-      setSortLastName(true);
-    } else {
-      setSort("lastname,desc");
-      setSortLastName(false);
-    }
-    setSortUsername(null);
-    setSortName(null);
-  };
 
+
+  
   const edit = (client: any) => {
     if (client) {
       setShowModal2(true);
-      console.log("hola", client);
-      setClientEdit({
+      console.log("hofffffffffffffffffffffffla", client);
+      setValues({
         id: client._id,
         name: client.name,
         telefono: client.telefono,
@@ -192,7 +147,16 @@ const Clientes = () => {
         condicioniva: client.condicioniva,
         razonsocial: client.razonsocial,
       });
-      console.log("insumo", clientEdit);
+      setValuesBody([
+        {name:"name", value:client.name}, 
+        {name:"telefono", value:client.telefono}, 
+        {name:"cuit", value:client.cuit}, 
+        {name:"email", value:client.email}, 
+        {name:"direccion", value:client.direccion}, 
+        {name:"condicioniva", value:client.condicioniva}, 
+        {name:"razonsocial", value:client.razonsocial}
+      ])
+      console.log("insumo", valuesBody);
     }
   };
 
@@ -226,6 +190,7 @@ const Clientes = () => {
               Clientes
             </h2>
           </div>
+          
           <div className="my-3 flex sm:flex-row flex-col">
             <div className="flex flex-row mb-1 sm:mb-0">
               <div className="relative">
@@ -275,229 +240,27 @@ const Clientes = () => {
               />
             </div>
           </div>
-          <div className="-mx-4 sm:-mx-8 px-4 sm:px-8  overflow-x-auto">
-            <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-              <table className="min-w-full leading-normal relative">
-                <thead>
-                  <tr className="bg-gray-100 text-left text-gray-600 font-semibold uppercase">
-                    <th
-                      className="hover:bg-gray-300 px-3 py-3 border-b-2 border-gray-200 cursor-pointer tracking-wider"
-                      onClick={sortByUsername}
-                    >
-                      <div className="flex justify-between gap-2">
-                        Nombre
-                        <div
-                          className={`${sortUsername === null && "opacity-0"}`}
-                        >
-                          <MdExpandLess
-                            className={`text-red-600 ${
-                              sortUsername && sortUsername !== null
-                                ? "opacity-100"
-                                : "opacity-40"
-                            }`}
-                          />
-                          <MdExpandMore
-                            className={`-mt-2 text-red-600 ${
-                              !sortUsername ? "opacity-100" : "opacity-40"
-                            }`}
-                          />
-                        </div>
-                      </div>
-                    </th>
-                    <th
-                      className="hover:bg-gray-300 px-3 py-3 border-b-2 border-gray-200 cursor-pointer tracking-wider"
-                      onClick={sortByName}
-                    >
-                      <div className="flex justify-between gap-2">
-                        Telefono
-                        <div className={`${sortName === null && "opacity-0"}`}>
-                          <MdExpandLess
-                            className={`text-red-600 ${
-                              sortName ? "opacity-100" : "opacity-40"
-                            }`}
-                          />
-                          <MdExpandMore
-                            className={`-mt-2 text-red-600 ${
-                              !sortName ? "opacity-100" : "opacity-40"
-                            }`}
-                          />
-                        </div>
-                      </div>
-                    </th>
-                    <th
-                      className="hover:bg-gray-300 px-3 py-3 border-b-2 border-gray-200 cursor-pointer tracking-wider"
-                      onClick={sortByLastName}
-                    >
-                      <div className="flex justify-between gap-2">
-                        Dirección
-                        <div
-                          className={`${sortLastName === null && "opacity-0"}`}
-                        >
-                          <MdExpandLess
-                            className={`text-red-600 ${
-                              sortLastName ? "opacity-100" : "opacity-40"
-                            }`}
-                          />
-                          <MdExpandMore
-                            className={`-mt-2 text-red-600 ${
-                              !sortLastName ? "opacity-100" : "opacity-40"
-                            }`}
-                          />
-                        </div>
-                      </div>
-                    </th>
-                    <th className="px-3 py-3 border-b-2 border-gray-20 tracking-wider">
-                      Email
-                    </th>
-                    <th className="px-3 py-3 border-b-2 border-gray-200  tracking-wider">
-                      CUIT
-                    </th>
-                    <th className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
-                      Condición I.V.A
-                    </th>
-                    <th className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
-                      ver
-                    </th>
-                    <th className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
-                      editar
-                    </th>
-                    <th className="px-3 py-3 border-b-2 border-gray-200 tracking-wider">
-                      eliminar
-                    </th>
-                  </tr>
-                </thead>
-                {!loading && (
-                  <tbody>
-                    {clientes.clientes?.map((client: any, index: number) => (
-                      <tr
-                        key={client._id}
-                        className={`border-b border-gray-200 text-base ${
-                          index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                        } hover:bg-gray-100`}
-                      >
-                        <td className="px-3 py-2">
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {client.name}
-                          </p>
-                        </td>
-                        <td className="px-3 py-2">
-                          <p className="text-gray-900 whitespace-no-wrap capitalize">
-                            {client.telefono}
-                          </p>
-                        </td>
-                        <td className="px-3 py-2">
-                          <p className="text-gray-900 whitespace-no-wrap capitalize">
-                            {client.direccion}
-                          </p>
-                        </td>
-                        <td className="px-3 py-2">
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {client.email}
-                          </p>
-                        </td>
-                        <td className="px-3 py-2">
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {client.cuit}
-                          </p>
-                        </td>
-                        <td className="px-3 py-2">
-                          <p className="text-gray-900 whitespace-no-wrap capitalize">
-                            {client.condicioniva}
-                          </p>
-                        </td>
-                        <td className="px-3 py-2">
-                        <p
-                            className="text-gray-900 whitespace-no-wrap capitalize"
-                            onClick={() => ver(client)}
-                          >
-                             <BsSearch />
-                          </p>
-                          <ModalVer
-                            showModal3={showModal3}
-                            setShowModal3={setShowModal3}
-                           
-                          >
-                            <VerCliente
-                              setShowModal3={setShowModal3}
-                              ordenesPorMes={ordenesPorMes}
-                              cliente={clientEdit}
-                            />
-                          </ModalVer>
-                        </td>
-                        <td className="px-3 py-2">
-                          <p
-                            className="text-gray-900 whitespace-no-wrap capitalize"
-                            onClick={() => edit(client)}
-                          >
-                            <FiEdit3 />
-                          </p>
-                          <ModalEdit
-                            showModal2={showModal2}
-                            setShowModal2={setShowModal2}
-                          >
-                      <Form  values={clientEdit} valuesBody={valuesBody} errors={errors} add={putClients} setValues={setValues} setShowModal={setShowModal2} clientes={clientes.clientes} TextForm={"Editar Cliente"} closeModal={closeModal} />
 
-                          </ModalEdit>
-                        </td>
-                        <td className="px-3 py-2">
-                          <p
-                            className="text-gray-900 whitespace-no-wrap capitalize"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => DeleteCliente(client)}
-                          >
-                            {<MdDelete />}
-                          </p>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                )}
-              </table>
-              {loading && (
-                <div>
-                  <Loader />
-                </div>
-              )}
-              <div className="px-3 py-3 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-                <div className="flex gap-2 align-center items-center xs:mt-0">
-                  <button onClick={firtPage}>
-                    <MdFirstPage
-                      className={`text-2xl text-red-600 ${
-                        page === 1 && "opacity-50"
-                      }`}
-                    />
-                  </button>
-                  <button onClick={prevPage}>
-                    <MdKeyboardArrowLeft
-                      className={`text-2xl text-red-600 ${
-                        page === 1 && "opacity-50"
-                      }`}
-                    />
-                  </button>
+          {/**start table */}
+          <Table 
+          text={"clientes"} 
+          items={clientes.clientes} 
+          itemGeneral={clientes} 
+          tableItems={tableItems} 
+          loading={loading} 
+          addEdit={putClients}
+          setShowModal2={setShowModal2}
+          showModal2={showModal2}
+          TextForm={"Editar Cliente"}
+          closeModal={closeModal}
+          values={values}
+          setValues={setValues}
+          errors={errors}
+          valuesBody={valuesBody}
+          edit={edit}
+          />
+          {/**end table */}
 
-                  <span className="text-base xs:text-xs text-gray-900">
-                    {`Página ${clientes.page} de ${clientes.totalPages}`}
-                  </span>
-
-                  <button onClick={nextPage}>
-                    <MdKeyboardArrowRight
-                      className={`text-2xl text-red-600 ${
-                        page === clientes.totalPages && "opacity-50"
-                      }`}
-                    />
-                  </button>
-
-                  <button onClick={lastPage}>
-                    <MdLastPage
-                      className={`text-2xl text-red-600 ${
-                        page === clientes.totalPages && "opacity-50"
-                      }`}
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <div className="mb-5">
           <button

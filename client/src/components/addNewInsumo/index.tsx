@@ -1,21 +1,28 @@
 import useForm from '../../hooks/useForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import useInsumo from '../../store/insumo';
 import useUser from '../../store/user';
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { BsFillCheckCircleFill } from "react-icons/bs";
-import { MdError, MdExitToApp } from "react-icons/md";
+import useProveedor from '../../store/proveedores';
+import useHeaders from "../../hooks/useHeaders";
 import Swal from 'sweetalert2'
 
-type Props = {
-	setShowModal2: any;
-    insumo:any
-};
-const InsumoEdit = ({ setShowModal2, insumo }: Props) => {
-  
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import { MdError, MdExitToApp  } from "react-icons/md";
 
-    const { success, putInsumo, closeModal, error} = useInsumo((state) => state);
+
+type Props = {
+	setShowModal: any;
+  insumos: any
+};
+const InsumoPost = ({ setShowModal, insumos }: Props) => {
+  
+  const [accessToken] = useLocalStorage();
+  const headers = useHeaders(accessToken);
+    const { insumo, success, postInsumo, closeModal, error} = useInsumo((state) => state);
+    const { proveedores, getProveedores} = useProveedor((state) => state);
+
       const [token] = useLocalStorage();
 
 
@@ -23,15 +30,16 @@ const InsumoEdit = ({ setShowModal2, insumo }: Props) => {
     const navigate = useNavigate();
     
     const [values, setValues] = useState({
-      id:insumo.id,
-      name:insumo.name,
-      descripcion:insumo.descripcion,
-      unidad:insumo.unidad,
-      costo:insumo.costo,
-      category:insumo.category,
-      proveedor:insumo.proveedor
+      name:'',
+      descripcion:'',
+      unidad:'',
+      costo:'',
+      category:'',
+      proveedor:''
     });
-   
+   useEffect(() => {
+    getProveedores(headers)
+   },[])
 
     const [errors, setErrors] = useState<any>({});
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -43,41 +51,50 @@ const InsumoEdit = ({ setShowModal2, insumo }: Props) => {
   };
 
   const handleCloseModal = () => {
-		setShowModal2(false);
+		setShowModal(false);
 		closeModal();
 	};
 
   const handleSubmit = (e: React.SyntheticEvent) => {
+   
     e.preventDefault();
+    var newArray: any = insumos
+    newArray.push(values)
+    insumos=newArray
+        postInsumo(values, token)
+    
         
-
         Swal.fire({
-          title: '¿Desea guardar los cambios?',
-          showDenyButton: true,
-          showCancelButton: true,
-          confirmButtonColor: '#77B327',
-          confirmButtonText: 'Guardar',
-          denyButtonText: `No guardar`,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire('¡Guardado exitosamente!', '', 'success')
-            putInsumo(values, token)
-            handleCloseModal()
-            success
-          } else if (result.isDenied) {
-            Swal.fire('Los cambios no han sido guardados', '', 'info')
-          
-          }
+          position: 'center',
+          icon: 'success',
+          title: 'Cambios guardados exitosamente',
+          showConfirmButton: false,
+          timer: 1500
         })
+        setValues({
+          name:'',
+          descripcion:'',
+          unidad:'',
+          costo:'',
+          category:'',
+          proveedor:''
+        })
+        handleCloseModal()
   }
-
+  const handleSelect= (e: React.ChangeEvent<HTMLSelectElement>)=>{
+    let {value}= e.currentTarget;
+    setValues({
+      ...values,
+      proveedor: value,
+    });
+  }
   return (
     <div className='rounded-lg shadow dark:border md:mt-0 xl:p-0 '>
     <div className='p-6 space-y-4 sm:p-8'>
-    <div className="flex border-b-4 border-[#77B327] rounded border-b-4 p-5 mb-1 ">
+    <div className="flex border-b-4 border-[#77B327] rounded border-b-4 p-5 mb-1 grid sm:gap-1  sm:grid-cols-1 md:gap-2 md:grid-cols-2">
       
-      <div className="w-1/2">
-       <h1 className="text-3xl">Editar Insumo</h1>
+      <div className="">
+       <h1 className="text-3xl">Crear Insumo</h1>
       </div>
 
       <button
@@ -145,7 +162,7 @@ const InsumoEdit = ({ setShowModal2, insumo }: Props) => {
         {errors.email && (
           <p className='text-red-600 text-sm'>{errors.email}</p>
         )}
-        </div>
+        </ div>
         <input
           type='text'
           name='category'
@@ -157,14 +174,24 @@ const InsumoEdit = ({ setShowModal2, insumo }: Props) => {
         {errors.password && (
           <p className='text-red-600 text-sm'>{errors.password}</p>
         )}
-        <input
-          type='text'
-          name='proveedor'
-          className='px-4 py-3 mt-4 w-full rounded-md border bg-gray-100 appearance-none border-gray-300 focus:outline-none focus:bg-white focus:ring-0 text-sm'
-          placeholder='Proveedor'
-          value={values.proveedor}
-          onChange={handleChange}
-        />
+       
+        <div className="w-full mt-3 ">
+              
+              <select
+                className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-state"
+                name="proveedor"
+                value={values.proveedor}
+                onChange={handleSelect}
+              >
+                <option value="" defaultValue={""} disabled>
+                  Seleccionar proveedor
+                </option>
+                {proveedores.map((e: any) => (
+                  <option value={e.name}>{e.name}</option>
+                ))}
+              </select>
+            </div>
         {errors.password2 && (
           <p className='text-red-600 text-sm'>{errors.password2}</p>
         )}
@@ -191,4 +218,4 @@ const InsumoEdit = ({ setShowModal2, insumo }: Props) => {
 }
 
 
-export default InsumoEdit
+export default InsumoPost
