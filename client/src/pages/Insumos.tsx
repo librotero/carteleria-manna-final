@@ -6,8 +6,6 @@ import Modal from "../components/Modal";
 import ModalVer from "../components/ModalVer";
 
 import VerInsumo from '../components/VerInsumo'
-import AddNewInsumo from "../components/addNewInsumo";
-import EditInsumo from "../components/EditInsumo";
 import shallow from "zustand/shallow";
 import useInsumo from "../store/insumo";
 import useProveedor from "../store/proveedores";
@@ -26,18 +24,19 @@ import {
 import { BsSearch } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { FiEdit3 } from "react-icons/fi";
-import  Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import Loader from "../components/Loader";
 import useHeaders from "../hooks/useHeaders";
 import useClients from "../store/clientes";
-import AddNewClient from "../components/AddNewClient";
 import ModalEdit from "../components/ModalEdit";
+import Form from "../components/Form";
+import FormEdit from "../components/FormEdit";
 const Clientes = () => {
-  const { users, getUsers } = useUser((state:any) => state, shallow);
-  const { getInsumosAll, getInsumos, insumos, insumos2, deleteIsumos, loading, success } = useInsumo(
-    (state:any) => state
+  const { users, getUsers } = useUser((state: any) => state, shallow);
+  const { getInsumosAll, getInsumos, postInsumo, putInsumo, errors, insumos, insumos2, deleteIsumos, loading, success, closeModal } = useInsumo(
+    (state: any) => state
   );
-  const { proveedores, getProveedores } = useProveedor((state:any) => state);
+  const { proveedores, getProveedores } = useProveedor((state: any) => state);
 
   const [rol, setRol] = useState("");
   const [sort, setSort] = useState("");
@@ -46,7 +45,7 @@ const Clientes = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
-const [proveedorInsumo, setProveedorInsumo]=useState({})
+  const [proveedorInsumo, setProveedorInsumo] = useState({})
   const [insumoEdit, setInsumoEdit] = useState({
     id: "",
     name: "",
@@ -55,7 +54,7 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
     costo: "",
     category: "",
     proveedor: "",
-    another:""
+    another: ""
   });
 
   const [sortUsername, setSortUsername] = useState<null | boolean>(true);
@@ -63,6 +62,25 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
   const [sortLastName, setSortLastName] = useState<null | boolean>(null);
   const [accessToken] = useLocalStorage();
   const [name, setName] = useState('');
+  const [values, setValues] = useState({
+    id: "",
+    name: "",
+    descripcion: "",
+    unidad: "",
+    costo: "",
+    category: "",
+    proveedor: "",
+    another: ""
+  });
+
+  const [valuesBody, setValuesBody] = useState([
+    { name: "name", value: "" },
+    { name: "descripcion", value: "" },
+    { name: "unidad", value: "" },
+    { name: "costo", value: "" },
+    { name: "category", value: "" },
+    { name: "proveedor", value: "" },
+  ]);
 
   const headers = useHeaders(accessToken);
   useEffect(() => {
@@ -72,34 +90,34 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
   }, [limit, page, name]);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
-    const {value } = e.currentTarget;
+    const { value } = e.currentTarget;
     setName(value);
- 
+
 
   };
   //delete
   const DeleteInsumo = (insumo: any) => {
     Swal.fire({
-			title: '¿Estás seguro?',
-			text: "No podrás revertir los cambios",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#77B327',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Si, Eliminarlo!'
-		  }).then((result:any) => {
-			if (result.isConfirmed) {
-			  Swal.fire(
-				'Eliminado!',
-				'X ha sido eliminado',
-				'success'
-			  )
-        var newArray:any = insumos.insumos
-        var arrayeliminado : any =insumos.insumos.filter((e:any)=>e._id!==insumo._id)
-        insumos.insumos=arrayeliminado
+      title: '¿Estás seguro?',
+      text: "No podrás revertir los cambios",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#77B327',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminarlo!'
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Eliminado!',
+          'X ha sido eliminado',
+          'success'
+        )
+        var newArray: any = insumos.insumos
+        var arrayeliminado: any = insumos.insumos.filter((e: any) => e._id !== insumo._id)
+        insumos.insumos = arrayeliminado
         deleteIsumos(insumo._id, headers);
-			}
-		  })
+      }
+    })
   };
 
   const nextPage = (): void => {
@@ -163,7 +181,7 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
     if (insumo) {
       setShowModal2(true);
       console.log("hola", insumo._id);
-      setInsumoEdit({
+      setValues({
         id: insumo._id,
         name: insumo.name,
         descripcion: insumo.descripcion,
@@ -171,15 +189,23 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
         costo: insumo.costo,
         category: insumo.category,
         proveedor: insumo.proveedor,
-        another:""
+        another: ""
       });
-      
+      setValuesBody([
+        { name: "name", value: insumo.name },
+        { name: "descripcion", value: insumo.descripcion },
+        { name: "unidad", value: insumo.unidad},
+        { name: "costo", value: insumo.costo},
+        { name: "category", value: insumo.category},
+        { name: "proveedor", value: insumo.proveedor},
+      ])
+
     }
   };
   const ver = (insumo: any) => {
     if (insumo) {
       setShowModal3(true);
-      var anotherInsumos: any = insumos2.filter((e:any)=>e.name===insumo.name)
+      var anotherInsumos: any = insumos2.filter((e: any) => e.name === insumo.name)
       setInsumoEdit({
         id: insumo._id,
         name: insumo.name,
@@ -191,8 +217,8 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
         another: anotherInsumos,
       });
     }
-    console.log("hola",insumoEdit)
-  var object:any = proveedores.find(
+    console.log("hola", insumoEdit)
+    var object: any = proveedores.find(
       (e: any) => e.name === insumo.proveedor
     );
     setProveedorInsumo(object)
@@ -251,7 +277,7 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
               <input
                 placeholder="Buscar por nombre"
                 className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
-              onChange={handleChange}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -270,16 +296,14 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
                           className={`${sortUsername === null && "opacity-0"}`}
                         >
                           <MdExpandLess
-                            className={`text-red-600 ${
-                              sortUsername && sortUsername !== null
+                            className={`text-red-600 ${sortUsername && sortUsername !== null
                                 ? "opacity-100"
                                 : "opacity-40"
-                            }`}
+                              }`}
                           />
                           <MdExpandMore
-                            className={`-mt-2 text-red-600 ${
-                              !sortUsername ? "opacity-100" : "opacity-40"
-                            }`}
+                            className={`-mt-2 text-red-600 ${!sortUsername ? "opacity-100" : "opacity-40"
+                              }`}
                           />
                         </div>
                       </div>
@@ -292,14 +316,12 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
                         descripción
                         <div className={`${sortName === null && "opacity-0"}`}>
                           <MdExpandLess
-                            className={`text-red-600 ${
-                              sortName ? "opacity-100" : "opacity-40"
-                            }`}
+                            className={`text-red-600 ${sortName ? "opacity-100" : "opacity-40"
+                              }`}
                           />
                           <MdExpandMore
-                            className={`-mt-2 text-red-600 ${
-                              !sortName ? "opacity-100" : "opacity-40"
-                            }`}
+                            className={`-mt-2 text-red-600 ${!sortName ? "opacity-100" : "opacity-40"
+                              }`}
                           />
                         </div>
                       </div>
@@ -314,14 +336,12 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
                           className={`${sortLastName === null && "opacity-0"}`}
                         >
                           <MdExpandLess
-                            className={`text-red-600 ${
-                              sortLastName ? "opacity-100" : "opacity-40"
-                            }`}
+                            className={`text-red-600 ${sortLastName ? "opacity-100" : "opacity-40"
+                              }`}
                           />
                           <MdExpandMore
-                            className={`-mt-2 text-red-600 ${
-                              !sortLastName ? "opacity-100" : "opacity-40"
-                            }`}
+                            className={`-mt-2 text-red-600 ${!sortLastName ? "opacity-100" : "opacity-40"
+                              }`}
                           />
                         </div>
                       </div>
@@ -351,9 +371,8 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
                     {insumos.insumos?.map((insumo: any, index: number) => (
                       <tr
                         key={insumo._id}
-                        className={`border-b border-gray-200 text-base ${
-                          index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                        } hover:bg-gray-100`}
+                        className={`border-b border-gray-200 text-base ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                          } hover:bg-gray-100`}
                       >
                         <td className="px-3 py-2">
                           <p className="text-gray-900 whitespace-no-wrap">
@@ -386,11 +405,11 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
                           </p>
                         </td>
                         <td className="px-3 py-2">
-                        <p
+                          <p
                             className="text-gray-900 whitespace-no-wrap capitalize"
                             onClick={() => ver(insumo)}
                           >
-                             <BsSearch />
+                            <BsSearch />
                           </p>
                           <ModalVer
                             showModal3={showModal3}
@@ -414,10 +433,8 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
                             showModal2={showModal2}
                             setShowModal2={setShowModal2}
                           >
-                            <EditInsumo
-                              setShowModal2={setShowModal2}
-                              insumo={insumoEdit}
-                            />
+                            <FormEdit values={values} valuesBody={valuesBody} errors={errors} add={putInsumo} setValues={setValues} setShowModal={setShowModal2} clientes={insumos.insumos} TextForm={"Editar Cliente"} closeModal={closeModal} />
+
                           </ModalEdit>
                         </td>
                         <td className="px-3 py-2">
@@ -444,16 +461,14 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
                 <div className="flex gap-2 align-center items-center xs:mt-0">
                   <button onClick={firtPage}>
                     <MdFirstPage
-                      className={`text-2xl text-red-600 ${
-                        page === 1 && "opacity-50"
-                      }`}
+                      className={`text-2xl text-red-600 ${page === 1 && "opacity-50"
+                        }`}
                     />
                   </button>
                   <button onClick={prevPage}>
                     <MdKeyboardArrowLeft
-                      className={`text-2xl text-red-600 ${
-                        page === 1 && "opacity-50"
-                      }`}
+                      className={`text-2xl text-red-600 ${page === 1 && "opacity-50"
+                        }`}
                     />
                   </button>
 
@@ -463,17 +478,15 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
 
                   <button onClick={nextPage}>
                     <MdKeyboardArrowRight
-                      className={`text-2xl text-red-600 ${
-                        page === insumos.totalPages && "opacity-50"
-                      }`}
+                      className={`text-2xl text-red-600 ${page === insumos.totalPages && "opacity-50"
+                        }`}
                     />
                   </button>
 
                   <button onClick={lastPage}>
                     <MdLastPage
-                      className={`text-2xl text-red-600 ${
-                        page === insumos.totalPages && "opacity-50"
-                      }`}
+                      className={`text-2xl text-red-600 ${page === insumos.totalPages && "opacity-50"
+                        }`}
                     />
                   </button>
                 </div>
@@ -492,7 +505,7 @@ const [proveedorInsumo, setProveedorInsumo]=useState({})
           </button>
         </div>
         <Modal showModal={showModal} setShowModal={setShowModal}>
-          <AddNewInsumo setShowModal={setShowModal} insumos={insumos.insumos} />
+          <Form values={values} valuesBody={valuesBody} errors={errors} add={postInsumo} setValues={setValues} setShowModal={setShowModal} clientes={insumos.insumos} TextForm={"Crear insumos"} closeModal={closeModal} />
         </Modal>
       </div>
     </Layout>
