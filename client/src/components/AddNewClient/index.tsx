@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 
 type Props = {
 	setShowModal: any;
-	clientes:any
+	clientes: any
 };
 
 interface Values {
@@ -47,27 +47,27 @@ const AddNewClient = ({ setShowModal, clientes }: Props) => {
 
 	const handleSubmit = (e: React.SyntheticEvent) => {
 		e.preventDefault();
-		
+
 		Swal.fire({
 			position: 'center',
 			icon: 'success',
 			title: 'Cambios guardados exitosamente',
 			showConfirmButton: false,
 			timer: 1500
-		  })
-	
+		})
+
 		addClient(values);
 		var newArray: any = clientes
 		newArray.push(values)
-		clientes=newArray
-	handleCloseModal()
+		clientes = newArray
+		handleCloseModal()
 	};
 
 	const handleCloseModal = () => {
 		setShowModal(false);
 		closeModal();
 	};
-const [ condicionIva, setCondicionIva ] =useState(["Responsable Inscrito", "Excento", "Monotributista"])
+	const [condicionIva, setCondicionIva] = useState(["Responsable Inscrito", "Excento", "Monotributista"])
 	// const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
 	// 	let { value } = e.currentTarget;
 
@@ -76,14 +76,14 @@ const [ condicionIva, setCondicionIva ] =useState(["Responsable Inscrito", "Exce
 	// 		roles: [value],
 	// 	});
 	// };
-	const handleSelectCondicionIva= (e: React.ChangeEvent<HTMLSelectElement>)=>{
-		let {value}= e.currentTarget;
-		  setValues({
+	const handleSelectCondicionIva = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		let { value } = e.currentTarget;
+		setValues({
 			...values,
 			condicioniva: value
-		  });
-		
-	  }
+		});
+
+	}
 	useEffect(() => {
 		success &&
 			setValues({
@@ -102,19 +102,19 @@ const [ condicionIva, setCondicionIva ] =useState(["Responsable Inscrito", "Exce
 	return (
 		<div className='rounded-lg shadow dark:border md:mt-0 xl:p-0 '>
 			<div className='p-6 space-y-4 sm:p-8'>
-			<div className="flex border-b-4 border-[#77B327] rounded border-b-4 p-5 mb-1 grid sm:gap-1  sm:grid-cols-1 md:gap-2 md:grid-cols-2">
-      
-	  <div className="">
-	   <h1 className="text-3xl">Crear Cliente</h1>
-	  </div>
+				<div className="flex border-b-4 border-[#77B327] rounded border-b-4 p-5 mb-1 grid sm:gap-1  sm:grid-cols-1 md:gap-2 md:grid-cols-2">
 
-	  <button
-		className=" text-black text-4xl w-full h-10  flex justify-end"
-		onClick={handleCloseModal}
-	  >
-		<MdExitToApp />
-	  </button>
-	  </div>
+					<div className="">
+						<h1 className="text-3xl">Crear Cliente</h1>
+					</div>
+
+					<button
+						className=" text-black text-4xl w-full h-10  flex justify-end"
+						onClick={handleCloseModal}
+					>
+						<MdExitToApp />
+					</button>
+				</div>
 				<form onSubmit={handleSubmit} className='flex flex-col mt-4'>
 					<input
 						type='text'
@@ -192,22 +192,22 @@ const [ condicionIva, setCondicionIva ] =useState(["Responsable Inscrito", "Exce
 						<p className='text-red-600 text-sm'>{errors.password2}</p>
 					)}
 					<div className="w-full">
-              
-              <select
-                className="block appearance-none w-full mt-4 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="grid-state"
-                name="condicioniva"
-                value={values.condicioniva}
-                onChange={handleSelectCondicionIva}
-              >
-                <option value="" defaultValue={""} disabled>
-                  Seleccionar condición fiscal
-                </option>
-                {condicionIva.map((e: any) => (
-                  <option value={e}>{e}</option>
-                ))}
-              </select>
-            </div>
+
+						<select
+							className="block appearance-none w-full mt-4 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+							id="grid-state"
+							name="condicioniva"
+							value={values.condicioniva}
+							onChange={handleSelectCondicionIva}
+						>
+							<option value="" defaultValue={""} disabled>
+								Seleccionar condición fiscal
+							</option>
+							{condicionIva.map((e: any) => (
+								<option value={e}>{e}</option>
+							))}
+						</select>
+					</div>
 					<div className='flex items-center mt-6 justify-end p-6 border-t border-solid border-slate-200 rounded-b'>
 						<button
 							className='text-red-600 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'

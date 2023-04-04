@@ -66,7 +66,7 @@ const [name, setName] = useState('');
   useEffect(() => {
     getProveedoresAll(accessToken, limit, page, name);
     getInsumos(headers)
-    console.log("holaaaaaa", insumos2);
+    console.log("holaaaaaa", insumos2, proveedores);
   }, [limit, page, name]);
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const {value } = e.currentTarget;

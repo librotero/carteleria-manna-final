@@ -269,7 +269,8 @@ const VerOrdenes = ({ setShowModal4, orden }: Props) => {
         <h1 className="flex justify-center text-lg border-b-2 p-5 ">
           Contacto
         </h1>
-        {orden.clientes ? (
+      {/**
+       *   {orden.clientes ? (
           <>
             <div className="ml-10 mt-5 text-xl ">
               <p>Email</p>
@@ -334,6 +335,7 @@ const VerOrdenes = ({ setShowModal4, orden }: Props) => {
             </div>
           </>
         )}
+       */}
       </div>
     </div>
   );

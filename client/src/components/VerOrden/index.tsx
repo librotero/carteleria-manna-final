@@ -22,11 +22,18 @@ const InsumoEdit = ({ setShowModal3, orden }: Props) => {
   const [accessToken] = useLocalStorage();
   const headers = useHeaders(accessToken);
   const { clientes, getClients } = useClients((state) => state);
-  var cliente: any = clientes.find((e: any) => e.name === orden.cliente);
+ 
   useEffect(() => {
     getClients(headers);
-
+    var cliente: any = clientes.find((e: any) => e.name === orden.cliente);
     console.log("hola soy clientes", clientes, cliente);
+    getUser(accessToken)
+    if (!orden.values) {
+      setValues({
+        ...values,
+        resta: 0,
+      });
+    }
   }, []);
   const {
     ordenes,
@@ -164,15 +171,7 @@ const InsumoEdit = ({ setShowModal3, orden }: Props) => {
     }
   };
 
-  useEffect(() => {
-    getUser(accessToken)
-    if (!orden.values) {
-      setValues({
-        ...values,
-        resta: 0,
-      });
-    }
-  }, []);
+
   return (
     <div className="m-5">
         <div className="relative flex justify-end mb-10 p-5 flex text-end ">
@@ -410,12 +409,14 @@ const InsumoEdit = ({ setShowModal3, orden }: Props) => {
         )}
       </div>
       <h1 className="text-lg text-center font-bold">Contacto</h1>
-      {
+     {/**
+      * 
+      *  {
   orden.clientes?
 <>
 <div className="ml-10 mt-5 text-xl ">
   <p>Email</p>
-  <h1>{orden.clientes.email}</h1>
+ 
 </div>
 <div className="flex m-5">
 
@@ -436,11 +437,7 @@ const InsumoEdit = ({ setShowModal3, orden }: Props) => {
     </a>
   </div>
   <div className="m-7 text-2xl">
-    <a
-      href={`mailto:${orden.clientes.email}?Subject=Interesado%20en%20su%20trabajo`}
-    >
-      <MdEmail />
-    </a>
+   
   </div>
 </div>
 </div>
@@ -450,7 +447,7 @@ const InsumoEdit = ({ setShowModal3, orden }: Props) => {
 <>
 <div className="ml-10 mt-5 text-xl ">
                 <p>Email</p>
-                <h1>{cliente.email}</h1>
+                
               </div>
           <div className="flex m-5">
           
@@ -471,17 +468,15 @@ const InsumoEdit = ({ setShowModal3, orden }: Props) => {
                   </a>
                 </div>
                 <div className="m-7 text-2xl">
-                  <a
-                    href={`mailto:${cliente.email}?Subject=Interesado%20en%20su%20trabajo`}
-                  >
-                    <MdEmail />
-                  </a>
+                  
                 </div>
               </div>
             </div>
           </div>
 </>
 }
+      * 
+      */}
     </div>
   </div>
 
