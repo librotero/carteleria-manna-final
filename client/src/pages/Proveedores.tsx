@@ -170,10 +170,10 @@ const Proveedores = () => {
           />
           {/**end header */}
 
-            {/**start table */}
-         {/**
-          *    <Table 
-          text={"proveedores"} 
+            {/**start table */}  
+            <Table 
+          getItemsAll={getProveedoresAll}
+          text={"clientes"} 
           items={proveedores.proveedores} 
           itemGeneral={proveedores} 
           tableItems={tableItems} 
@@ -181,15 +181,15 @@ const Proveedores = () => {
           addEdit={putProveedor}
           setShowModal2={setShowModal2}
           showModal2={showModal2}
-          TextForm={"Editar Proveedor"}
+          TextForm={"Editar Cliente"}
           closeModal={closeModal}
           values={values}
           setValues={setValues}
           errors={errors}
           valuesBody={valuesBody}
           edit={edit}
+          actionDelete={deleteProveedores}
           />
-          */}
           {/**end table */}
         </div>
         <div className="mb-5">
@@ -203,7 +203,7 @@ const Proveedores = () => {
           </button>
         </div>
         <Modal showModal={showModal} setShowModal={setShowModal}>
-          <Form values={values} valuesBody={valuesBody} errors={errors} add={addProveedores} setValues={setValues} setShowModal={setShowModal} clientes={proveedores.proveedores} TextForm={"Crear Proveedor"} closeModal={closeModal} />
+          <Form proveedores={"hola"} values={values} valuesBody={valuesBody} errors={errors} add={addProveedores} setValues={setValues} setShowModal={setShowModal} clientes={proveedores.proveedores} TextForm={"Crear Proveedor"} closeModal={closeModal} />
 
         </Modal>
       </div>

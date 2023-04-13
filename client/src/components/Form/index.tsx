@@ -12,9 +12,10 @@ type Props = {
     setValues: any
     errors: any;
     valuesBody: any;
+    proveedores: any;
 };
 
-const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeModal, values, valuesBody }: Props) => {
+const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeModal, values, valuesBody, proveedores }: Props) => {
 
 
     // close form 
@@ -26,20 +27,20 @@ const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeM
     const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault();
 
-      
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Cambios guardados exitosamente',
-                showConfirmButton: false,
-                timer: 1500
-            })
-            console.log("hola parece qu me va bien ", values)
-            add(values);
-            var newArray: any = clientes
-            newArray.push(values)
-            clientes = newArray
-      
+
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Cambios guardados exitosamente',
+            showConfirmButton: false,
+            timer: 1500
+        })
+        console.log("hola parece qu me va bien ", values)
+        add(values);
+        var newArray: any = clientes
+        newArray.push(values)
+        clientes = newArray
+
         handleCloseModal()
     };
 
@@ -54,8 +55,16 @@ const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeM
         });
         console.log("joaaaaaaaaaaaaaaaa", values)
     };
+
+    const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        let { value } = e.currentTarget;
+        setValues({
+            ...values,
+            proveedor: value
+        })
+    }
     return (
-        <div>
+        <div className="uppercase">
             <div className="flex  bg-[#77B327] text-white  p-5 mb-1 grid sm:gap-1  sm:grid-cols-1 md:gap-2 md:grid-cols-2">
 
                 <div className="">
@@ -75,19 +84,42 @@ const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeM
                 <div>
                     <div className='flex flex-wrap ml-10 '>
                         {
-                            valuesBody.map((e: any, index:any) => (
+                            valuesBody.map((e: any, index: any) => (
                                 <div className='m-1' key={index}>
-                                    <p className='m-1'>
-                                        {e.name}
-                                    </p>
-                                    <input
-                                        type='text'
-                                        name={e.name}
-                                        className='px-4 py-3 w-full rounded-md border bg-gray-100 appearance-none border-gray-300 focus:outline-none focus:bg-white focus:ring-0 text-sm'
-                                        placeholder={e.name}
-                                        value={values.e}
-                                        onChange={handleChange}
-                                    />
+                                    {
+                                        e.name === "proveedor"
+                                            ?
+                                            <>
+                                                <p className='m-1'>
+                                                    {e.name}
+                                                </p>
+                                                <select
+                                                id='select'
+                                                    value={e.name}
+                                                    onChange={handleSelect}
+                                                    className="px-4  py-4  w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
+                                                >
+<option value="">--Seleccione una opción--</option>
+                                                    {proveedores.map((e: any, index: any) => (
+                                                        <option key={index} value={e.name}>{e.name} </option>
+                                                    ))}
+                                                </select>
+                                            </>
+                                            :
+                                            <>
+                                                <p className='m-1'>
+                                                    {e.name}
+                                                </p>
+                                                <input
+                                                    type='text'
+                                                    name={e.name}
+                                                    className='px-4 py-3 w-full rounded-md border bg-gray-100 appearance-none border-gray-300 focus:outline-none focus:bg-white focus:ring-0 text-sm'
+                                                    placeholder={e.name}
+                                                    value={values.e}
+                                                    onChange={handleChange}
+                                                />
+                                            </>
+                                    }
 
                                 </div>
 

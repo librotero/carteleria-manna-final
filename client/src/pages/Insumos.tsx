@@ -433,7 +433,7 @@ const Clientes = () => {
                             showModal2={showModal2}
                             setShowModal2={setShowModal2}
                           >
-                            <FormEdit values={values} valuesBody={valuesBody} errors={errors} add={putInsumo} setValues={setValues} setShowModal={setShowModal2} clientes={insumos.insumos} TextForm={"Editar Cliente"} closeModal={closeModal} />
+                            <FormEdit values={values} valuesBody={valuesBody} errors={errors} add={putInsumo} setValues={setValues} setShowModal={setShowModal2}  TextForm={"Editar Cliente"} closeModal={closeModal} />
 
                           </ModalEdit>
                         </td>
@@ -505,7 +505,7 @@ const Clientes = () => {
           </button>
         </div>
         <Modal showModal={showModal} setShowModal={setShowModal}>
-          <Form values={values} valuesBody={valuesBody} errors={errors} add={postInsumo} setValues={setValues} setShowModal={setShowModal} clientes={insumos.insumos} TextForm={"Crear insumos"} closeModal={closeModal} />
+          <Form values={values} valuesBody={valuesBody} errors={errors} add={postInsumo} setValues={setValues} setShowModal={setShowModal} clientes={insumos.insumos} TextForm={"Crear insumos"} closeModal={closeModal} proveedores={proveedores}/>
         </Modal>
       </div>
     </Layout>

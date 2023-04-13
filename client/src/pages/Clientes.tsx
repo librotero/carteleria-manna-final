@@ -220,7 +220,7 @@ const Clientes = () => {
           </button>
         </div>
         <Modal showModal={showModal} setShowModal={setShowModal}>
-          <Form  values={values} valuesBody={valuesBody} errors={errors} add={addClient} setValues={setValues} setShowModal={setShowModal} clientes={clientes.clientes} TextForm={"Crear Cliente"} closeModal={closeModal} />
+          <Form proveedores={"hola"}  values={values} valuesBody={valuesBody} errors={errors} add={addClient} setValues={setValues} setShowModal={setShowModal} clientes={clientes.clientes} TextForm={"Crear Cliente"} closeModal={closeModal} />
         </Modal>
       </div>
     </Layout>
