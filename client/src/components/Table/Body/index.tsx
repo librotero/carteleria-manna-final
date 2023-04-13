@@ -47,8 +47,7 @@ const Body = ({ edit,  actionDelete, errors, showModal2, setShowModal2, addEdit,
         {items?.map((item: any, index: number) => (
             <tr
                 key={item._id}
-                className={`border-b border-gray-200 text-base ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                    } hover:bg-gray-100`}
+                className={`border-b border-gray-200 text-base ${index % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100`}
             >
                 {
                     asignarContent(item)
@@ -58,7 +57,6 @@ const Body = ({ edit,  actionDelete, errors, showModal2, setShowModal2, addEdit,
                         className="text-gray-900 whitespace-no-wrap capitalize"
                         
                     >
-                        <BsSearch />
                     </p>
                     
                 </td>

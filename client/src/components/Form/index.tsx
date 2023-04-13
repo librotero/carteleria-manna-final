@@ -94,12 +94,12 @@ const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeM
                                                     {e.name}
                                                 </p>
                                                 <select
-                                                id='select'
+                                                    id='select'
                                                     value={e.name}
                                                     onChange={handleSelect}
                                                     className="px-4  py-4  w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
                                                 >
-<option value="">--Seleccione una opción--</option>
+                                                    <option value="">--Seleccione una opción--</option>
                                                     {proveedores.map((e: any, index: any) => (
                                                         <option key={index} value={e.name}>{e.name} </option>
                                                     ))}
