@@ -63,14 +63,12 @@ const Clientes = () => {
   const [accessToken] = useLocalStorage();
   const [name, setName] = useState('');
   const [values, setValues] = useState({
-    id: "",
     name: "",
     descripcion: "",
     unidad: "",
     costo: "",
     category: "",
     proveedor: "",
-    another: ""
   });
 
   const [valuesBody, setValuesBody] = useState([
@@ -182,14 +180,12 @@ const Clientes = () => {
       setShowModal2(true);
       console.log("hola", insumo._id);
       setValues({
-        id: insumo._id,
         name: insumo.name,
         descripcion: insumo.descripcion,
         unidad: insumo.unidad,
         costo: insumo.costo,
         category: insumo.category,
         proveedor: insumo.proveedor,
-        another: ""
       });
       setValuesBody([
         { name: "name", value: insumo.name },

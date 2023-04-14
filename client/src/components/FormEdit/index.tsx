@@ -65,6 +65,9 @@ const FormEdit = ({ errors, setShowModal, add, setValues,  TextForm, closeModal,
 
             }
         })
+        handleCloseModal()
+        location.reload()
+
     };
 
     const [valorInput, setValorInput] = useState<string>("hola");
