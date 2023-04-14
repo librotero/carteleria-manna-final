@@ -70,6 +70,8 @@ const FormEdit = ({ errors, setShowModal, add, setValues,  TextForm, closeModal,
 
     };
 
+   
+
     const [valorInput, setValorInput] = useState<string>("hola");
 
     return (
@@ -89,7 +91,7 @@ const FormEdit = ({ errors, setShowModal, add, setValues,  TextForm, closeModal,
             </div>
 
             {/**aqui comienza el form */}
-            <form onSubmit={handleSubmit} className='flex justify-center'>
+            <form id="formulario" onSubmit={handleSubmit} className='flex justify-center'>
                 <div>
                     <div className='flex flex-wrap ml-10 '>
                         {
