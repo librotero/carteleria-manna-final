@@ -318,6 +318,21 @@ const deleteInsumos =(e:any)=>{
   console.log("hola esto soy", c1f)
   console.log("hola soy un array eliminado", array.length, values.costo1faz, totalcosto1faz)
 }
+
+function validarFormulario() {
+  var form:any = document.getElementById("fomulario");
+  var campos:any = form.querySelectorAll("[required]");
+
+  for (var i = 0; i < campos.length; i++) {
+    if (!campos[i].value) {
+      alert("Debe llenar todos los campos obligatorios.");
+      return false;
+    }
+  }
+
+  return true;
+}
+
   return (
     <div className="rounded-lg shadow dark:border md:mt-0 xl:p-0 ">
       <div className=" sm:p-8">
@@ -542,7 +557,7 @@ disabled
           </button>
         </div>
 {/**end form agregar insumo */}
-        <form onSubmit={handleSubmit} className="flex flex-col m-4">
+        <form id="formulario" onSubmit={handleSubmit} className="flex flex-col m-4">
           <input
             type="text"
             name="descripcion"
@@ -550,6 +565,7 @@ disabled
             placeholder="descripcion"
             value={values.descripcion}
             onChange={handleChange}
+            required
           />
           {errors.username && (
             <p className="text-red-600 text-sm">{errors.username}</p>
@@ -563,6 +579,7 @@ disabled
                 placeholder="Costo de 1 faz"
                 value={values.costo1faz=totalcosto1faz}
                 onChange={handleChange}
+                required
               />
               {errors.name && (
                 <p className="text-red-600 text-sm">{errors.name}</p>
@@ -581,6 +598,7 @@ disabled
                     0
                 }
                 onChange={handleChange}
+                required
               />
               {errors.lastname && (
                 <p className="text-red-600 text-sm">{errors.lastname}</p>
@@ -599,6 +617,7 @@ disabled
               value={e} 
               onChange={(e:any)=>categoryForm(e)}
               className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+            
               />
               <label key={e.id} className="py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">{e}</label>
           </div>

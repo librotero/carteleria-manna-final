@@ -42,9 +42,22 @@ const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeM
         clientes = newArray
 
         handleCloseModal()
+        location.reload()
     };
 
-
+    function validarFormulario() {
+        var form:any = document.getElementById("fomulario");
+        var campos:any = form.querySelectorAll("[required]");
+      
+        for (var i = 0; i < campos.length; i++) {
+          if (!campos[i].value) {
+            alert("Debe llenar todos los campos obligatorios.");
+            return false;
+          }
+        }
+      
+        return true;
+      }
     const handleChange = (
         e: React.FormEvent<HTMLInputElement>
     ): void => {
@@ -80,7 +93,7 @@ const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeM
             </div>
 
             {/**aqui comienza el form */}
-            <form onSubmit={handleSubmit} className='flex justify-center'>
+            <form id="formulario" onSubmit={handleSubmit} className='flex justify-center'>
                 <div>
                     <div className='flex flex-wrap ml-10 '>
                         {
@@ -98,8 +111,17 @@ const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeM
                                                     value={e.name}
                                                     onChange={handleSelect}
                                                     className="px-4  py-4  w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
-                                                >
-                                                    <option value="">--Seleccione una opción--</option>
+                                                    required
+                                               >
+                                                    <option value={values.proveedor}>
+                                                        {
+                                                            values.proveedor === ""
+                                                            ?
+                                                            "Por favor seleccione un proveedor"
+                                                            :
+                                                            values.proveedor
+                                                        }
+                                                    </option>
                                                     {proveedores.map((e: any, index: any) => (
                                                         <option key={index} value={e.name}>{e.name} </option>
                                                     ))}
@@ -117,6 +139,7 @@ const Form = ({ errors, setShowModal, add, setValues, clientes, TextForm, closeM
                                                     placeholder={e.name}
                                                     value={values.e}
                                                     onChange={handleChange}
+                                                    required
                                                 />
                                             </>
                                     }
