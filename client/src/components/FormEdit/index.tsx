@@ -70,7 +70,7 @@ const FormEdit = ({ errors, setShowModal, add, setValues,  TextForm, closeModal,
     const [valorInput, setValorInput] = useState<string>("hola");
 
     return (
-        <div>
+        <div  className="uppercase">
             <div className="flex  bg-[#77B327] text-white  p-5 mb-1 grid sm:gap-1  sm:grid-cols-1 md:gap-2 md:grid-cols-2">
 
                 <div className="">

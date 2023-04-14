@@ -12,7 +12,7 @@ import Dashboard from "../pages/Dashboard";
 const AppRouter = () => {
 	
 	return (
-		<>
+		<div className="uppercase">
 			<Sidebar />
 			<Routes>
 				<Route path='/' element={<Home />} />
@@ -25,7 +25,7 @@ const AppRouter = () => {
 				<Route path='/presupuesto' element={<Presupuesto />} />
 				<Route path='/dashboard' element={<Dashboard/>} />
 			</Routes>
-		</>
+		</div>
 	);
 };
 

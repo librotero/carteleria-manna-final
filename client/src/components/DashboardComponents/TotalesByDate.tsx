@@ -40,7 +40,7 @@ const TotalesByDate =({sumTotales, sumSeñas, sumTotalOrdenes}:Props)=>{
               </div>
               <div>
                 <div className="font-bold md:text-5xl sm:text-4xl">
-                  $ {sumTotales + sumSeñas}
+                  $ {sumTotales }
                 </div>
                 <div className="font-bold text-sm">Totales</div>
               </div>
@@ -75,7 +75,7 @@ const TotalesByDate =({sumTotales, sumSeñas, sumTotalOrdenes}:Props)=>{
               </div>
               <div>
                 <div className="font-bold md:text-5xl sm:text-4xl text-start">
-                  $ {sumTotales}
+                  $ {sumTotales-sumSeñas}
                 </div>
                 <div className="font-bold text-sm">por cobrar</div>
               </div>
